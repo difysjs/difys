@@ -1,0 +1,16 @@
+{
+	"[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.autoIndent": false,
+	"prettier.endOfLine": "lf",
+	"prettier.eslintIntegration": true,
+	"prettier.useTabs": true,
+	"prettier.tabWidth": 4,
+	"prettier.singleQuote": true,
+	"vetur.format.options.tabSize": 4,
+	"vetur.format.defaultFormatter.html": "prettier",
+	"vetur.format.options.useTabs": true,
+}
