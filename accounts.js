@@ -1,0 +1,3 @@
+const accounts = [
+	{username: "", password: ""},
+]

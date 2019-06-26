@@ -7,8 +7,12 @@
   "author": "Alaa Zorkane <Alaazorkane@gmail.com>",
   "license": "GPL-3.0-or-later",
   "private": false,
+  "scripts": {
+    "start": "nodemon --exec babel-node main.js"
+  },
   "devDependencies": {
     "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.0.1",
@@ -24,7 +28,9 @@
     "prettier": "^1.18.2"
   },
   "dependencies": {
-    "request": "^2.88.0",
+    "axios": "^0.19.0",
+    "chalk": "^2.4.2",
+    "moment": "^2.24.0",
     "winston": "^3.2.1"
   }
 }
