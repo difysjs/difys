@@ -5,10 +5,11 @@ import axios from "axios";
 import Connection from "./Modules/Connection";
 
 /* Tools */
+// eslint-disable-next-line no-unused-vars
 import logger from "../Tools/Logger";
 
 /* Configuration */
-import { constants, clientConfig } from "../../config";
+import { constants, clientConfig } from "../Config/config";
 
 /**
  *

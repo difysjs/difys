@@ -1,3 +1,0 @@
-const accounts = [
-	{username: "", password: ""},
-]

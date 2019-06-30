@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { createLogger, format, transports, addColors } from "winston";
-import { logsConfig } from "../../config";
+import { logsConfig } from "../Config/config";
 import chalk from "chalk";
 import moment from 'moment';
 
