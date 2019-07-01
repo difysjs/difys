@@ -1,6 +1,6 @@
 import axios from "axios";
 import Module from "../Module";
-import Socket from "../../Tools";
+import Socket from "../../Tools/Socket";
 
 export default class Connection extends Module {
 	constructor(gameConfig) {
