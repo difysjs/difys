@@ -5,7 +5,7 @@ const clientConfig = {
 	lang: "fr",
 	country: "fr",
 	gatherData: true,
-	accounts: JSON.parse(accountList)
+	accounts: accountList
 };
 
 const modulesConfig = {};
