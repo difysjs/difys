@@ -1,6 +1,11 @@
-import Store from "./Store";
-import Dispatcher from "./Dispatcher";
+import { configureStore } from "redux-starter-kit";
+import devToolsEnhancer from "remote-redux-devtools";
+import rootReducer from "./reducers";
 
-const store = new Store(new Dispatcher());
+const store = configureStore({
+	reducer: rootReducer,
+	devTools: false,
+	enhancers: [devToolsEnhancer({ realtime: true })]
+});
 
 export default store;
