@@ -1,16 +1,11 @@
-import Auth from "../Modules/Auth/Auth";
-import Network from "../Modules/Network";
-import Store from "../Modules/Store/Store";
-import PluginManager from "../Modules/PluginManager";
+import Store from "../Modules/Store";
+import Auth from "../Modules/Auth";
+// import Network from "../Modules/Network";
+// import PluginManager from "../Modules/PluginManager";
 
 export default class ModuleLoader {
 	constructor() {
-		this.modules = [
-			new Auth(),
-			new Network(),
-			new Store(),
-			new PluginManager()
-		];
+		this.modules = [new Store(), new Auth()];
 		// References all modules instances by their name into that class for easy access
 		for (let instance of this.modules) {
 			this[instance.constructor.name] = instance;
