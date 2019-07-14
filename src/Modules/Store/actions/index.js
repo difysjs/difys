@@ -1,20 +1,16 @@
-// Metadata actions
-const setAppVersion = (state, action) => {
-	state.appVersion = action.payload;
-};
-const setBuildVersion = (state, action) => {
-	state.buildVersion = action.payload;
-};
+import { setAppVersion, setBuildVersion } from "./metadata";
+import { addAccount, initAccount, setAccountId, setStatus } from "./account";
+import { setHaapi, setToken } from "./auth";
+import { setCoords } from "./map";
 
-// Account actions
-const addAccount = (state, action) => {
-	const username = action.payload.username;
-	state[username] = { username: username };
+export {
+	setAppVersion,
+	setBuildVersion,
+	addAccount,
+	initAccount,
+	setAccountId,
+	setStatus,
+	setHaapi,
+	setToken,
+	setCoords
 };
-const setAccountId = (state, action) => {
-	const username = action.payload.username;
-	const accountId = action.payload.accountId;
-	state[username] = { ...state[username], accountId };
-};
-
-export { setAppVersion, setBuildVersion, setAccountId, addAccount };

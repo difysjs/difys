@@ -1,27 +1,17 @@
 import { createSlice } from "redux-starter-kit";
-import {
-	addAccount,
-	setAccountId,
-	setAppVersion,
-	setBuildVersion
-} from "../actions";
+import metadataReducers from "./metadata";
+import accountReducers from "./accounts";
 
 const metadata = createSlice({
 	slice: "metadata",
 	initialState: {},
-	reducers: {
-		setAppVersion,
-		setBuildVersion
-	}
+	reducers: metadataReducers
 });
 
 const accounts = createSlice({
 	slice: "accounts",
 	initialState: {},
-	reducers: {
-		addAccount,
-		setAccountId
-	}
+	reducers: accountReducers
 });
 
 export { metadata, accounts };
