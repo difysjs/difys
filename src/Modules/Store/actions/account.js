@@ -6,7 +6,11 @@ const initAccount = (state, action) => {
 	const username = action.payload.username;
 	const account = state[username];
 	account.auth = {};
-	account.gameData = { map: {}, inventory: {}, stats: {} };
+	account.gameData = {
+		map: { entities: {} },
+		inventory: { items: {} },
+		stats: {}
+	};
 };
 const setAccountId = (state, action) => {
 	const username = action.payload.username;

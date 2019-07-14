@@ -1,7 +1,8 @@
 import { setAppVersion, setBuildVersion } from "./metadata";
 import { addAccount, initAccount, setAccountId, setStatus } from "./account";
 import { setHaapi, setToken } from "./auth";
-import { setCoords } from "./map";
+import { setCoords, pushEntity, removeEntity } from "./map";
+import { addItem, removeItem, setEquipment } from "./inventory";
 
 export {
 	setAppVersion,
@@ -12,5 +13,10 @@ export {
 	setStatus,
 	setHaapi,
 	setToken,
-	setCoords
+	setCoords,
+	pushEntity,
+	removeEntity,
+	addItem,
+	removeItem,
+	setEquipment
 };

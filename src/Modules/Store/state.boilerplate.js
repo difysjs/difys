@@ -15,17 +15,25 @@ export const State = {
 			gameData: {
 				map: {
 					coordinates: [2, 1],
-					entities: [
-						{
-							// Player entity example
+					entities: {
+						"165432": {
+							id: "165432",
 							name: "in-game-username",
-							level: Number,
-							contextualId: Number
+							level: 200
 						}
-					]
+					}
 				},
 				inventory: {
-					items: [122, 54, 65],
+					items: {
+						"100": {
+							id: "100",
+							quantity: "20"
+						},
+						"240": {
+							id: "240",
+							quantity: "10"
+						}
+					},
 					equipped: [34, 2523, 435]
 				},
 				stats: {

@@ -8,7 +8,13 @@ import {
 	setHaapi,
 	setToken,
 	/* map */
-	setCoords
+	setCoords,
+	pushEntity,
+	removeEntity,
+	/* inventory */
+	addItem,
+	removeItem,
+	setEquipment
 } from "../actions";
 
 const accountsReducers = {
@@ -21,7 +27,13 @@ const accountsReducers = {
 	setHaapi,
 	setToken,
 	/* map */
-	setCoords
+	setCoords,
+	pushEntity,
+	removeEntity,
+	/* inventory */
+	addItem,
+	removeItem,
+	setEquipment
 };
 
 export default accountsReducers;
