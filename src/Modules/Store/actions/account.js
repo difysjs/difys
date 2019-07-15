@@ -1,17 +1,16 @@
 const addAccount = (state, action) => {
 	const username = action.payload.username;
-	state[username] = { username };
-};
-const initAccount = (state, action) => {
-	const username = action.payload.username;
-	const account = state[username];
-	account.auth = {};
-	account.gameData = {
-		map: { entities: {} },
-		inventory: { items: {} },
-		stats: {}
+	state[username] = {
+		username,
+		auth: {},
+		gameData: {
+			map: { entities: {} },
+			inventory: { items: {} },
+			stats: { general: {}, alignmentInfos: {} }
+		}
 	};
 };
+
 const setAccountId = (state, action) => {
 	const username = action.payload.username;
 	const accountId = action.payload.accountId;
@@ -25,4 +24,4 @@ const setStatus = (state, action) => {
 	account.status = status;
 };
 
-export { addAccount, setAccountId, setStatus, initAccount };
+export { addAccount, setAccountId, setStatus };

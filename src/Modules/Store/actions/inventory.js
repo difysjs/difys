@@ -15,6 +15,6 @@ const setEquipment = (state, action) => {
 	const equipment = action.payload.equipment;
 	const inventory = state[username].gameData.inventory;
 	inventory.equipment = equipment;
-}
+};
 
 export { addItem, removeItem, setEquipment };

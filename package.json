@@ -10,7 +10,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node ./src/main.js",
     "test": "nodemon --exec babel-node ./src/test.js",
-	"debug": "nodemon --exec babel-node --inspect ./src/test.js"
+    "debug": "nodemon --exec babel-node --inspect ./src/test.js"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

@@ -1,7 +1,6 @@
 import {
 	/* account */
 	addAccount,
-	initAccount,
 	setAccountId,
 	setStatus,
 	/* auth */
@@ -14,13 +13,15 @@ import {
 	/* inventory */
 	addItem,
 	removeItem,
-	setEquipment
+	setEquipment,
+	/* stats */
+	setStats,
+	updateCharacteristic
 } from "../actions";
 
 const accountsReducers = {
 	/* account */
 	addAccount,
-	initAccount,
 	setAccountId,
 	setStatus,
 	/* auth */
@@ -33,7 +34,10 @@ const accountsReducers = {
 	/* inventory */
 	addItem,
 	removeItem,
-	setEquipment
+	setEquipment,
+	/* stats */
+	setStats,
+	updateCharacteristic
 };
 
 export default accountsReducers;

@@ -1,0 +1,562 @@
+{
+  "_messageType": "CharacterStatsListMessage",
+  "stats": {
+    "_type": "CharacterCharacteristicsInformations",
+    "experience": 807124,
+    "experienceLevelFloor": 768050,
+    "experienceNextLevelFloor": 861650,
+    "kamas": 70917,
+    "statsPoints": 0,
+    "additionnalPoints": 0,
+    "spellsPoints": 1,
+    "alignmentInfos": {
+      "_type": "ActorExtendedAlignmentInformations",
+      "alignmentSide": 0,
+      "alignmentValue": 0,
+      "alignmentGrade": 0,
+      "characterPower": 3088005,
+      "honor": 0,
+      "honorGradeFloor": 0,
+      "honorNextGradeFloor": 500,
+      "aggressable": 0
+    },
+    "lifePoints": 205,
+    "maxLifePoints": 205,
+    "energyPoints": 9790,
+    "maxEnergyPoints": 10000,
+    "actionPointsCurrent": 7,
+    "movementPointsCurrent": 3,
+    "initiative": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 440,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "prospecting": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 100,
+      "additionnal": 0,
+      "objectsAndMountBonus": 29,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "actionPoints": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 6,
+      "additionnal": 0,
+      "objectsAndMountBonus": 1,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "movementPoints": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 3,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "strength": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 11,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "vitality": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": -66,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "wisdom": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 23,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "chance": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "agility": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 31,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "intelligence": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 125,
+      "additionnal": 0,
+      "objectsAndMountBonus": 273,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "range": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "summonableCreaturesBoost": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 1,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "summonableMaximumBombs": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 3,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "reflect": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "criticalHit": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 1,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "criticalHitWeapon": 7,
+    "criticalMiss": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "healBonus": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "allDamagesBonus": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 10,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "weaponDamagesBonusPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "damagesBonusPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "trapBonus": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "trapBonusPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "permanentDamagePercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 10,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "tackleBlock": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 3,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "tackleEvade": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 3,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "PAAttack": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 2,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "PMAttack": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 2,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pushDamageBonus": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "criticalDamageBonus": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "neutralDamageBonus": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "earthDamageBonus": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "waterDamageBonus": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "airDamageBonus": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "fireDamageBonus": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "dodgePALostProbability": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 2,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "dodgePMLostProbability": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 2,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "neutralElementResistPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": -2,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "earthElementResistPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "waterElementResistPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "airElementResistPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "fireElementResistPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "neutralElementReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "earthElementReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "waterElementReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "airElementReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "fireElementReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pushDamageReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "criticalDamageReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pvpNeutralElementResistPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pvpEarthElementResistPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pvpWaterElementResistPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pvpAirElementResistPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pvpFireElementResistPercent": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pvpNeutralElementReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pvpEarthElementReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pvpWaterElementReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pvpAirElementReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "pvpFireElementReduction": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "dealtDamageMultiplierMelee": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "receivedDamageMultiplierMelee": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "dealtDamageMultiplierDistance": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "receivedDamageMultiplierDistance": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "dealtDamageMultiplierWeapon": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "receivedDamageMultiplierWeapon": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "dealtDamageMultiplierSpells": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "receivedDamageMultiplierSpells": {
+      "_type": "CharacterBaseCharacteristic",
+      "base": 0,
+      "additionnal": 0,
+      "objectsAndMountBonus": 0,
+      "alignGiftBonus": 0,
+      "contextModif": 0
+    },
+    "spellModifications": [],
+    "probationTime": 0
+  },
+  "_isInitialized": true
+}
