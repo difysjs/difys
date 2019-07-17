@@ -1,2 +1,0 @@
-accounts.forEach(account => {
-});

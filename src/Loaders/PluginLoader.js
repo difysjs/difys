@@ -12,10 +12,4 @@ export default class PluginLoader {
 			instance.mount();
 		}
 	}
-
-	unmount() {
-		for (let instance of this.plugins) {
-			instance.unmount();
-		}
-	}
 }

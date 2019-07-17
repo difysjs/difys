@@ -8,7 +8,7 @@
   "license": "GPL-3.0-or-later",
   "private": false,
   "scripts": {
-    "start": "nodemon --exec babel-node ./src/main.js",
+    "start": "nodemon --exec babel-node ./src/index.js",
     "test": "nodemon --exec babel-node ./src/test.js",
     "debug": "nodemon --exec babel-node --inspect ./src/test.js"
   },
@@ -35,8 +35,10 @@
     "engine.io": "^3.3.2",
     "engine.io-client": "^3.3.2",
     "fs-extra": "^8.1.0",
+    "https-proxy-agent": "^2.2.2",
     "luxon": "^1.16.0",
     "primus": "^7.3.3",
+    "query-string": "^6.8.1",
     "redux": "^4.0.4",
     "redux-starter-kit": "^0.5.1",
     "winston": "^3.2.1"

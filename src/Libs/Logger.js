@@ -32,7 +32,7 @@ const { Console, File } = transports;
 const reg = /(warn)|(error)|(info)|(verbose)|(debug)/g;
 const formatLevel = level => level.replace(reg, e => e.toUpperCase());
 
-const Logger = createLogger({
+const logger = createLogger({
 	level: "debug",
 	format: combine(
 		colorize({ colors: loggerLevels.colors }),
@@ -53,4 +53,4 @@ const Logger = createLogger({
 	]
 });
 
-export default Logger;
+export default logger;
