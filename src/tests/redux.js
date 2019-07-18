@@ -1,6 +1,6 @@
-import store from "./Modules/Store";
-import { metadata, accounts } from "./Modules/Store/reducers/slices";
-import boilerplate from "./Modules/Store/boilerplate";
+import store from "../Modules/Store";
+import { metadata, accounts } from "../Modules/Store/reducers/slices";
+import boilerplate from "../Modules/Store/boilerplate";
 
 const { setAppVersion, setBuildVersion } = metadata.actions;
 const {

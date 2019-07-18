@@ -1,19 +1,32 @@
+import { accountsList } from "../Config";
+import store from "../Modules/Store";
+import { accounts } from "../Modules/Store/reducers/slices";
 import Connection from "../Modules/Connection";
-import { accounts } from "../Config";
-// import Network from "../Modules/Network";
-// import PluginManager from "../Modules/PluginManager";
+import { logger } from "../Libs";
 
+// import Network from "../Modules/Network";
+// import PluginManager from "../Modules/PluginManager"
 export default class ModuleLoader {
 	constructor() {
 		this.connections = {};
 	}
 
-	mount() {
-		for (let account in accounts) {
-			let connection = new Connection();
-			connection.username = account.username;
-			connection.password = account.password;
-			this.connections[account.username] = connection;
+	async mount() {
+		const { addAccount } = accounts.actions;
+		for (let username in accountsList) {
+			store.dispatch(addAccount({ username }));
+			let connection = new Connection({
+				username,
+				password: accountsList[username]
+			});
+			// console.log(connection.account);
+			try {
+				logger.debug(`CONNECTION mounting process - [ ${username} ]`);
+				await connection.mount();
+			} catch (error) {
+				logger.error(new Error(error));
+			}
+			this.connections[username] = connection.socket;
 		}
 	}
 }

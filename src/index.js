@@ -8,7 +8,15 @@ const { setAppVersion, setBuildVersion } = metadata.actions;
 (async () => {
 	const core = new ModuleLoader();
 	// const plugins = new pluginLoader;
-	store.dispatch(setAppVersion(await getAppVersion()));
-	store.dispatch(setBuildVersion(await getBuildVersion()));
-	core.mount();
+	const unsubscribe = store.subscribe(() => {
+		console.log(store.getState());
+	});
+	const metadata = {
+		appVersion: getAppVersion(),
+		buildVersion: getBuildVersion()
+	};
+	store.dispatch(setAppVersion(await metadata.appVersion));
+	store.dispatch(setBuildVersion(await metadata.buildVersion));
+	await core.mount();
+	unsubscribe();
 })();
