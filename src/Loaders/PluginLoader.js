@@ -1,15 +1,15 @@
+// import MyFirstPlugin from '../Plugins/Myfirstplugin';
+
 export default class PluginLoader {
 	constructor() {
-		this.plugins = [];
-		// References all plugins instances by their name into that class for easy access
-		for (let instance of this.plugins) {
-			this[instance.constructor.name] = instance;
-		}
+		this.plugins = {
+			// MyfirstPlugin: new MyFirstPlugin()
+		};
 	}
 
-	mount() {
-		for (let instance of this.plugins) {
-			instance.mount();
+	mount(connections) {
+		for (let plugin in this.plugins) {
+			this.plugins[plugin].mount(connections);
 		}
 	}
 }

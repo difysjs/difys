@@ -11,12 +11,6 @@ const addAccount = (state, action) => {
 	};
 };
 
-const setAccountId = (state, action) => {
-	const username = action.payload.username;
-	const accountId = action.payload.accountId;
-	const account = state[username];
-	account.accountId = accountId;
-};
 const setStatus = (state, action) => {
 	const username = action.payload.username;
 	const status = action.payload.status;
@@ -24,4 +18,4 @@ const setStatus = (state, action) => {
 	account.status = status;
 };
 
-export { addAccount, setAccountId, setStatus };
+export { addAccount, setStatus };

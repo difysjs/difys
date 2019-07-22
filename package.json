@@ -9,8 +9,10 @@
   "private": false,
   "scripts": {
     "start": "nodemon --exec babel-node ./src/index.js",
+	"debug": "nodemon --exec babel-node --inspect-brk ./src/index.js",
     "redux": "nodemon --exec babel-node ./src/tests/redux.js",
-    "got": "nodemon --exec babel-node ./src/tests/got.js"
+    "got": "nodemon --exec babel-node ./src/tests/got.js",
+	"events": "nodemon --exec babel-node ./src/tests/events.js"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

@@ -1,6 +1,7 @@
 import got from "got";
 import HttpsProxyAgent from "https-proxy-agent";
 import { constants, general } from "../Config";
+import logger from "./logger";
 
 async function getAppVersion(proxy) {
 	const params = constants.app.params(general.country, general.language);
@@ -40,7 +41,23 @@ function getBuildVersion(proxy) {
 	});
 }
 
-export { getAppVersion, getBuildVersion };
+async function getAssetsVersion(proxy) {
+	const url = `${constants.baseUrl}${constants.entries.assets}`;
+	try {
+		const { body } = await got(url, {
+			agent: proxy ? new HttpsProxyAgent(proxy) : null,
+			json: true
+		});
+		return {
+			assetsVersion: body.assetsVersion,
+			staticDataVersion: body.staticDataVersion
+		};
+	} catch (error) {
+		logger.error(error);
+	}
+}
+
+export { getAppVersion, getBuildVersion, getAssetsVersion };
 
 /* getBuildVersion(proxy)
 	.then(console.log)

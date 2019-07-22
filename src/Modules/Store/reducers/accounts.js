@@ -1,11 +1,9 @@
 import {
 	/* account */
 	addAccount,
-	setAccountId,
 	setStatus,
 	/* auth */
-	setHaapi,
-	setToken,
+	setAuth,
 	/* map */
 	setCoords,
 	pushEntity,
@@ -22,11 +20,9 @@ import {
 const accountsReducers = {
 	/* account */
 	addAccount,
-	setAccountId,
 	setStatus,
 	/* auth */
-	setHaapi,
-	setToken,
+	setAuth,
 	/* map */
 	setCoords,
 	pushEntity,

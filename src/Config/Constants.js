@@ -5,7 +5,8 @@ const constants = {
 		haapi: "/Api/CreateApiKey",
 		token: "/Account/CreateToken",
 		build: "/build/script.js",
-		config: "/config.json"
+		config: "/config.json",
+		assets: "/assetsVersions.json"
 	},
 	app: {
 		url: "https://itunes.apple.com/lookup",

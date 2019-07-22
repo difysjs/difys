@@ -1,8 +1,7 @@
-import { setAppVersion, setBuildVersion } from "../actions";
+import { setMetadata } from "../actions";
 
 const metadataReducers = {
-	setAppVersion,
-	setBuildVersion
+	setMetadata
 };
 
 export default metadataReducers;

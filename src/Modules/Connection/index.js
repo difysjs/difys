@@ -4,6 +4,7 @@ import got from "got";
 import { constants } from "../../Config";
 import { accounts } from "../Store/reducers/slices";
 import { logger } from "../../Libs";
+import Socket from "./Socket";
 
 export default class Connection {
 	constructor(account) {
@@ -13,6 +14,7 @@ export default class Connection {
 		this.auth = {
 			apiKey: this.getHaapi(),
 			apiID: this.getApiID(),
+			accountID: null,
 			sessionID: null,
 			token: null
 		};
@@ -25,7 +27,9 @@ export default class Connection {
 			this.auth.apiKey,
 			this.auth.apiID
 		);
-		return this.dispatch();
+		this.dispatch();
+		this.socket = new Socket(this.auth.sessionID, this.account.username);
+		return this.socket;
 	}
 
 	async getApiID() {
@@ -47,7 +51,7 @@ export default class Connection {
 		try {
 			const url = `${constants.haapiUrl}${constants.entries.haapi}`;
 			const response = await got.post(url, {
-				// agent: null
+				// agent: this.proxy ? new HttpsProxyAgent(this.proxy) : null,
 				query: new URLSearchParams({
 					login: this.account.username,
 					password: this.account.password,
@@ -59,7 +63,7 @@ export default class Connection {
 				},
 				json: true
 			});
-			console.log(response.body.key);
+			this.auth.accountID = response.body.account_id;
 			return response.body.key;
 		} catch (error) {
 			logger.error(new Error(error));
@@ -77,7 +81,7 @@ export default class Connection {
 				json: true,
 				headers: { apiKey }
 			});
-			console.log(response.body.token);
+			// console.log(response.body.token);
 			return response.body.token;
 		} catch (error) {
 			logger.error(new Error(error));
@@ -85,12 +89,8 @@ export default class Connection {
 	}
 
 	dispatch() {
-		const { setHaapi, setToken, setAccountId } = accounts.actions;
+		const { setAuth } = accounts.actions;
 		const username = this.account.username;
-		const { apiKey, token, sessionID } = this.auth;
-		store.dispatch(setHaapi({ username, haapi: apiKey }));
-		store.dispatch(setToken({ username, token }));
-		store.dispatch(setAccountId({ username, accountId: sessionID }));
-		console.log(store.getState().accounts[username].auth);
+		store.dispatch(setAuth({ username, auth: this.auth }));
 	}
 }

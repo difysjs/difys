@@ -1,22 +1,39 @@
 import store from "./Modules/Store";
 import { metadata } from "./Modules/Store/reducers/slices";
-import { getAppVersion, getBuildVersion } from "./Libs";
+import {
+	getAppVersion,
+	getBuildVersion,
+	getAssetsVersion,
+	logger
+} from "./Libs";
 import ModuleLoader from "./Loaders/ModuleLoader";
+import PluginLoader from "./Loaders/PluginLoader";
 
-const { setAppVersion, setBuildVersion } = metadata.actions;
+const { setMetadata } = metadata.actions;
 
 (async () => {
 	const core = new ModuleLoader();
-	// const plugins = new pluginLoader;
-	const unsubscribe = store.subscribe(() => {
+	const plugins = new PluginLoader();
+	/* const unsubscribe = store.subscribe(() => {
 		console.log(store.getState());
-	});
-	const metadata = {
-		appVersion: getAppVersion(),
-		buildVersion: getBuildVersion()
-	};
-	store.dispatch(setAppVersion(await metadata.appVersion));
-	store.dispatch(setBuildVersion(await metadata.buildVersion));
+	}); */
+	try {
+		const [assets, appVersion, buildVersion] = await Promise.all([
+			getAssetsVersion(),
+			getAppVersion(),
+			getBuildVersion()
+		]);
+		const metadata = {
+			appVersion,
+			buildVersion,
+			assetsVersion: assets.assetsVersion,
+			staticDataVersion: assets.staticDataVersion
+		};
+		store.dispatch(setMetadata(metadata));
+	} catch (error) {
+		logger.error(error);
+	}
 	await core.mount();
-	unsubscribe();
+	plugins.mount(core.connections);
+	// unsubscribe();
 })();

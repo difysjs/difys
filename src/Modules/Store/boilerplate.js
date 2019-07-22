@@ -5,12 +5,18 @@ const boilerplate = {
 	},
 	accounts: {
 		someUsername: {
-			accountId: Number,
 			username: "someUsername",
 			status: "CONNECTING", // HARVEST|FIGHTING|RUNNING|SWITCHING_SERVER|SWITCHING_TO_GAME
 			auth: {
-				haapi: "",
-				token: ""
+				apiKey: String,
+				apiID: Number,
+				accountID: Number,
+				sessionID: String,
+				token: String
+			},
+			primus: {
+				salt: String,
+				key: Array
 			},
 			gameData: {
 				map: {

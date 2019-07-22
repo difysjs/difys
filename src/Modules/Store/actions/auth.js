@@ -1,14 +1,8 @@
-const setHaapi = (state, action) => {
+const setAuth = (state, action) => {
 	const username = action.payload.username;
-	const haapi = action.payload.haapi;
+	const auth = action.payload.auth;
 	const account = state[username];
-	account.auth.haapi = haapi;
-};
-const setToken = (state, action) => {
-	const username = action.payload.username;
-	const token = action.payload.token;
-	const account = state[username];
-	account.auth.token = token;
+	account.auth = auth;
 };
 
-export { setHaapi, setToken };
+export { setAuth };

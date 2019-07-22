@@ -3,7 +3,6 @@ import store from "../Modules/Store";
 import { accounts } from "../Modules/Store/reducers/slices";
 import Connection from "../Modules/Connection";
 import { logger } from "../Libs";
-
 // import Network from "../Modules/Network";
 // import PluginManager from "../Modules/PluginManager"
 export default class ModuleLoader {
@@ -12,21 +11,22 @@ export default class ModuleLoader {
 	}
 
 	async mount() {
-		const { addAccount } = accounts.actions;
+		const { addAccount, setStatus } = accounts.actions;
 		for (let username in accountsList) {
 			store.dispatch(addAccount({ username }));
+			store.dispatch(setStatus({ username, status: "CONNECTING" }));
 			let connection = new Connection({
 				username,
-				password: accountsList[username]
+				password: accountsList[username],
+				proxy: null
 			});
-			// console.log(connection.account);
 			try {
 				logger.debug(`CONNECTION mounting process - [ ${username} ]`);
-				await connection.mount();
+				this.connections[username] = await connection.mount();
 			} catch (error) {
 				logger.error(new Error(error));
 			}
-			this.connections[username] = connection.socket;
+			this.connections[username].load();
 		}
 	}
 }
