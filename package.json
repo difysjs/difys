@@ -8,7 +8,11 @@
   "license": "GPL-3.0-or-later",
   "private": false,
   "scripts": {
-    "start": "nodemon --exec babel-node main.js"
+    "start": "nodemon --exec babel-node ./src/index.js",
+	"debug": "nodemon --exec babel-node --inspect-brk ./src/index.js",
+    "redux": "nodemon --exec babel-node ./src/tests/redux.js",
+    "got": "nodemon --exec babel-node ./src/tests/got.js",
+	"events": "nodemon --exec babel-node ./src/tests/events.js"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -25,16 +29,19 @@
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "nodemon": "^1.19.1",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "remote-redux-devtools": "^0.5.16"
   },
   "dependencies": {
-    "axios": "^0.19.0",
     "chalk": "^2.4.2",
     "engine.io": "^3.3.2",
     "engine.io-client": "^3.3.2",
     "fs-extra": "^8.1.0",
-    "moment": "^2.24.0",
+    "https-proxy-agent": "^2.2.2",
+    "luxon": "^1.16.0",
     "primus": "^7.3.3",
+    "redux": "^4.0.4",
+    "redux-starter-kit": "^0.5.1",
     "winston": "^3.2.1"
   }
 }

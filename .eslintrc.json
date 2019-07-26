@@ -17,5 +17,6 @@
         "sourceType": "module"
     },
     "rules": {
+		"no-useless-constructor": 0
     }
 }
