@@ -3,8 +3,8 @@ import chalk from "chalk";
 import { DateTime } from "luxon";
 
 /* Handling date */
-let date = DateTime.local();
-const time = () => chalk.grey.italic(`[${date.toFormat("hh:mm:ss")}]`);
+const date = () => DateTime.local();
+const time = () => chalk.grey.italic(`[${date().toFormat("hh:mm:ss")}]`);
 
 /* Difys custom logging config */
 const loggerLevels = {
@@ -44,10 +44,10 @@ const logger = createLogger({
 	transports: [
 		new Console({ levels: loggerLevels.levels }),
 		new File({
-			filename: `./logs/difys-log-${date.toFormat("LL-dd")}.log`
+			filename: `./logs/difys-log-${date().toFormat("LL-dd")}.log`
 		}),
 		new File({
-			filename: `./logs/errors/difys-${date.toFormat("LL-dd")}.log`,
+			filename: `./logs/errors/difys-${date().toFormat("LL-dd")}.log`,
 			level: "error"
 		})
 	]

@@ -28,12 +28,18 @@ export default class Connection {
 			this.auth.apiID
 		);
 		this.dispatch();
+		store.dispatch(
+			accounts.actions.setStatus({
+				username: this.account.username,
+				status: "LOGGING IN"
+			})
+		);
 		this.socket = new Socket(this.auth.sessionID, this.account.username);
 		return this.socket;
 	}
 
 	async getApiID() {
-		logger.debug("Getting the API ID");
+		logger.debug("CORE | REQUEST | ApiID");
 		try {
 			const url = `${constants.baseUrl}${constants.entries.config}`;
 			const response = await got(url, {
@@ -47,7 +53,7 @@ export default class Connection {
 	}
 
 	async getHaapi() {
-		logger.debug("Getting the haapi key");
+		logger.debug("CORE | REQUEST | HaapiKey");
 		try {
 			const url = `${constants.haapiUrl}${constants.entries.haapi}`;
 			const response = await got.post(url, {
@@ -71,7 +77,7 @@ export default class Connection {
 	}
 
 	async getToken(apiKey, apiID) {
-		logger.debug("Getting the token");
+		logger.debug("CORE | REQUEST | Token");
 		try {
 			const url = `${constants.haapiUrl}${constants.entries.token}`;
 			const response = await got(url, {

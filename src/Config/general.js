@@ -1,7 +1,8 @@
 const general = {
 	country: "fr",
 	language: "fr",
-	gatherData: true
+	gatherData: true,
+	debugMode: true
 };
 
 export default general;

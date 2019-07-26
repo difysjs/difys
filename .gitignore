@@ -4,7 +4,6 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-accounts.js*
 PRIVATE.js*
 
 # Runtime data

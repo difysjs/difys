@@ -1,4 +1,4 @@
-import store from "../Store";
+import store from "../../Store";
 
 export default function HelloConnectMessage(payload) {
 	const { socket, data } = payload;

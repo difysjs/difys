@@ -1,5 +1,21 @@
-import HelloConnectMessage from "./HelloConnectMessage";
-import assetsVersionChecked from "./assetsVersionChecked";
-import ServersListMessage from "./ServersListMessage";
+import HelloConnectMessage from "./messages/HelloConnectMessage";
+import assetsVersionChecked from "./messages/assetsVersionChecked";
+import IdentificationSuccessMessage from "./messages/IdentificationSuccessMessage";
+import ServersListMessage from "./messages/ServersListMessage";
+import SelectedServerDataMessage from "./messages/SelectedServerDataMessage";
+import IdentificationFailedMessage from "./messages/IdentificationFailedMessage";
+import IdentificationFailedBannedMessage from "./messages/IdentificationFailedBannedMessage";
+import serverDisconnecting from "./messages/serverDisconnecting";
 
-export { HelloConnectMessage, assetsVersionChecked, ServersListMessage };
+const Auth = [
+	HelloConnectMessage,
+	assetsVersionChecked,
+	IdentificationSuccessMessage,
+	ServersListMessage,
+	SelectedServerDataMessage,
+	IdentificationFailedMessage,
+	IdentificationFailedBannedMessage,
+	serverDisconnecting
+];
+
+export default Auth;

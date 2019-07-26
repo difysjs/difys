@@ -1,4 +1,4 @@
-import store from "../Store";
+import store from "../../Store";
 
 export default function assetsVersionChecked(payload) {
 	const { socket } = payload;

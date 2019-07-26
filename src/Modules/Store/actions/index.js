@@ -1,21 +1,28 @@
-import { setMetadata } from "./metadata";
-import { addAccount, setStatus } from "./account";
-import { setAuth } from "./auth";
-import { setCoords, pushEntity, removeEntity } from "./map";
-import { addItem, removeItem, setEquipment } from "./inventory";
-import { setStats, updateCharacteristic } from "./stats";
+import * as metadata from "./metadata/metadata";
+import * as account from "./account/account";
+import * as auth from "./account/auth";
+import * as map from "./account/map";
+import * as inventory from "./account/inventory";
+import * as stats from "./account/stats";
 
-export {
-	setMetadata,
-	addAccount,
-	setAuth,
-	setStatus,
-	setCoords,
-	pushEntity,
-	removeEntity,
-	addItem,
-	removeItem,
-	setEquipment,
-	setStats,
-	updateCharacteristic
-};
+const metadataActionsSets = { metadata };
+const accountActionsSets = { account, auth, map, inventory, stats };
+
+let accountActions = {};
+let metadataActions = {};
+
+for (let actionSet in metadataActionsSets) {
+	metadataActions = Object.assign(
+		metadataActions,
+		metadataActionsSets[actionSet]
+	);
+}
+
+for (let actionSet in accountActionsSets) {
+	accountActions = Object.assign(
+		accountActions,
+		accountActionsSets[actionSet]
+	);
+}
+
+export { accountActions, metadataActions };

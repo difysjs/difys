@@ -14,6 +14,8 @@ const { setMetadata } = metadata.actions;
 (async () => {
 	const core = new ModuleLoader();
 	const plugins = new PluginLoader();
+
+	core.listeners.plugins = plugins.listeners;
 	/* const unsubscribe = store.subscribe(() => {
 		console.log(store.getState());
 	}); */

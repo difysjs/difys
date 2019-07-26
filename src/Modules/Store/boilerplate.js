@@ -12,11 +12,47 @@ const boilerplate = {
 				apiID: Number,
 				accountID: Number,
 				sessionID: String,
-				token: String
+				token: String,
+				serversById: {
+					"406": {
+						name: "Terra Cogita",
+						id: 406,
+						status: 4,
+						completion: 0,
+						charactersCount: 3,
+						gameTypeId: 2,
+						date: 312497074
+					}
+					// a lot of servers
+				},
+				serversByName: {
+					"Terra Cogita": {
+						name: "Terra Cogita",
+						id: 406,
+						status: 4,
+						completion: 0,
+						charactersCount: 3,
+						gameTypeId: 2,
+						date: 312497074
+					}
+				},
+				selectedServer: "Terra Cogita",
+				selectedServerData: {
+					address: "6.9.6.9",
+					port: "1337",
+					id: 406,
+					ticket: "someTicket",
+					access: "server socket url"
+				}
 			},
-			primus: {
-				salt: String,
-				key: Array
+			extra: {
+				nickname: "someNickname",
+				subscribtionEndDate: "",
+				selectedCharacter: {
+					characterName: "my-character",
+					level: 69,
+					id: 120000
+				}
 			},
 			gameData: {
 				map: {

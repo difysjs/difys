@@ -15,8 +15,7 @@ const constants = {
 				country,
 				id: 1041406978,
 				lang,
-				limit: 1,
-				t: Date.now()
+				limit: 1
 			});
 		}
 	},
