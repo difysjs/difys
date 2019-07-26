@@ -44,19 +44,19 @@ export default class Chat extends Plugin {
 		const { socket, data } = payload;
 		const username = socket.account.username;
 		const { content, senderName, channel } = data;
-		Chat.chatLogger(content, senderName, channel, username);
+		Chat.logger(content, senderName, channel, username);
 	}
 
 	ChatServerWithObjectMessage(payload) {
 		const { socket, data } = payload;
 		const username = socket.account.username;
 		const { content, senderName, channel } = data;
-		Chat.chatLogger(content, senderName, channel, username);
+		Chat.logger(content, senderName, channel, username);
 	}
 
 	sendMsg(username) {}
 
-	static chatLogger(content, senderName, channel, username) {
+	static logger(content, senderName, channel, username) {
 		logger.info(
 			`CHAT | ${username} | [${channel}][${senderName}] >> ${content}`
 		);
