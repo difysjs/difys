@@ -1,8 +1,8 @@
 const general = {
 	country: "fr",
 	language: "fr",
-	gatherData: true,
-	debugMode: true
+	telemetry: true,
+	logLevel: "debug"
 };
 
 export default general;

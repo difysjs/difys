@@ -16,9 +16,6 @@ const { setMetadata } = metadata.actions;
 	const plugins = new PluginLoader();
 
 	core.listeners.plugins = plugins.listeners;
-	/* const unsubscribe = store.subscribe(() => {
-		console.log(store.getState());
-	}); */
 	try {
 		const [assets, appVersion, buildVersion] = await Promise.all([
 			getAssetsVersion(),
@@ -37,5 +34,4 @@ const { setMetadata } = metadata.actions;
 	}
 	await core.mount();
 	plugins.mount(core.connections);
-	// unsubscribe();
 })();
