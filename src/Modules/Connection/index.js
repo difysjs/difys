@@ -5,6 +5,7 @@ import { constants } from "../../Config";
 import { accounts } from "../Store/reducers/slices";
 import { logger } from "../../Libs";
 import Socket from "./Socket";
+import cloudscraper from "cloudscraper";
 
 export default class Connection {
 	constructor(account) {
@@ -55,22 +56,22 @@ export default class Connection {
 	async getHaapi() {
 		logger.debug("CORE | REQUEST | HaapiKey");
 		try {
-			const url = `${constants.haapiUrl}${constants.entries.haapi}`;
-			const response = await got.post(url, {
-				// agent: this.proxy ? new HttpsProxyAgent(this.proxy) : null,
-				query: new URLSearchParams({
+			const uri = `${constants.haapiUrl}${constants.entries.haapi}`;
+			const options = {
+				uri,
+				qs: new URLSearchParams({
 					login: this.account.username,
 					password: this.account.password,
 					long_life_token: false
 				}).toString(),
-				body: {
+				formData: {
 					login: this.account.username,
 					password: this.account.password
-				},
-				json: true
-			});
-			this.auth.accountID = response.body.account_id;
-			return response.body.key;
+				}
+			};
+			const response = JSON.parse(await cloudscraper.post(options));
+			this.auth.accountID = response.account_id;
+			return response.key;
 		} catch (error) {
 			logger.error(new Error(error));
 		}
