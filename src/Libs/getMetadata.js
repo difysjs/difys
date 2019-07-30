@@ -1,7 +1,7 @@
 import got from "got";
 import HttpsProxyAgent from "https-proxy-agent";
 import { constants, general } from "../Config";
-import logger from "./logger";
+import logger from "./Logger";
 
 async function getAppVersion(proxy) {
 	const params = constants.app.params(general.country, general.language);
