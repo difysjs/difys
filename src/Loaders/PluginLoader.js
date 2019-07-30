@@ -5,7 +5,10 @@ export default class PluginLoader {
 		this.plugins = {};
 		this.listeners = [];
 
-		const pluginNames = fs.readdirSync("./src/Plugins/");
+		const pluginNames = fs
+			.readdirSync("./src/Plugins/", { withFileTypes: true })
+			.filter(file => file.isDirectory())
+			.map(fileInfo => fileInfo.name);
 
 		for (let pluginName of pluginNames) {
 			const Plugin = require(`../Plugins/${pluginName}/index.js`).default;
