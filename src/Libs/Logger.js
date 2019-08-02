@@ -1,6 +1,7 @@
 import { createLogger, format, transports, addColors } from "winston";
 import chalk from "chalk";
 import { DateTime } from "luxon";
+import { general } from "../Config";
 
 /* Handling date */
 const date = () => DateTime.local();
@@ -33,7 +34,7 @@ const reg = /(warn)|(error)|(info)|(verbose)|(debug)/g;
 const formatLevel = level => level.replace(reg, e => e.toUpperCase());
 
 const logger = createLogger({
-	level: "debug",
+	level: general.logLevel ? general.logLevel : "debug",
 	format: combine(
 		colorize({ colors: loggerLevels.colors }),
 		printf(

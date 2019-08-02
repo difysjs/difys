@@ -4,11 +4,12 @@ const addAccount = (state, action) => {
 		username,
 		auth: { servers: {} },
 		extra: { selectedCharacter: {} },
-		gameData: {
+		currentSequenceNumber: 0
+		/* gameData: {
 			map: { entities: {} },
 			inventory: { items: {} },
 			stats: { general: {}, alignmentInfos: {} }
-		}
+		} */
 	};
 };
 
@@ -33,4 +34,16 @@ const setSelectedCharacter = (state, action) => {
 	account.extra.selectedCharacter = selectedCharacter;
 };
 
-export { addAccount, setStatus, setExtra, setSelectedCharacter };
+const updateSequenceNumber = (state, action) => {
+	const username = action.payload.username;
+	const account = state[username];
+	account.currentSequenceNumber++;
+};
+
+export {
+	addAccount,
+	setStatus,
+	setExtra,
+	setSelectedCharacter,
+	updateSequenceNumber
+};

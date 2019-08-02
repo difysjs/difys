@@ -2,8 +2,7 @@
 import Primus from "primus";
 import { modules, constants, general } from "../../Config";
 import store from "../Store";
-import { logger } from "../../Libs";
-import EventEmitter from "events";
+import { logger, EventEmitter } from "../../Libs";
 
 const PrimusSocket = Primus.createSocket({
 	transformer: "engine.io"
@@ -59,9 +58,8 @@ export default class Socket extends PrimusSocket {
 			};
 			listeners = [].concat(allListeners.game, allListeners.plugins);
 		}
-		for (let listener of listeners) {
-			emitter.on(listener.name, listener);
-		}
+		emitter.on(listeners);
+
 		this.on("open", () => {
 			this.send("connecting", {
 				language: general.language,
