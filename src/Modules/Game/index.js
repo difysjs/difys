@@ -5,6 +5,8 @@ import TrustStatusMessage from "./messages/TrustStatusMessage";
 import CharacterSelectedSuccessMessage from "./messages/CharacterSelectedSuccessMessage";
 import SequenceNumberRequestMessage from "./messages/SequenceNumberRequestMessage";
 import BasicLatencyStatsRequestMessage from "./messages/BasicLatencyStatsRequestMessage";
+import kpiStartSessionMessage from "./messages/kpiStartSessionMessage";
+import CurrentMapMessage from "./messages/CurrentMapMessage";
 
 const Game = [
 	serverDisconnecting,
@@ -13,7 +15,9 @@ const Game = [
 	TrustStatusMessage,
 	CharacterSelectedSuccessMessage,
 	SequenceNumberRequestMessage,
-	BasicLatencyStatsRequestMessage
+	BasicLatencyStatsRequestMessage,
+	kpiStartSessionMessage,
+	CurrentMapMessage
 ];
 
 export default Game;

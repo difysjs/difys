@@ -54,15 +54,16 @@ const boilerplate = {
 					characterName: "my-character",
 					level: 69,
 					id: 120000
-				},
-				currentSequenceNumber: 3
+				}
 			},
 			plugins: {
 				myPlugin: {
 					name: "myPlugin"
 					// custom plugin store
 				}
-			}
+			},
+			currentSequenceNumber: 3,
+			mapId: Number
 		}
 	}
 };

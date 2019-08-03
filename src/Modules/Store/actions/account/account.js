@@ -4,6 +4,7 @@ const addAccount = (state, action) => {
 		username,
 		auth: { servers: {} },
 		extra: { selectedCharacter: {} },
+		plugins: {},
 		currentSequenceNumber: 0
 		/* gameData: {
 			map: { entities: {} },
@@ -40,10 +41,17 @@ const updateSequenceNumber = (state, action) => {
 	account.currentSequenceNumber++;
 };
 
+const setMapId = (state, action) => {
+	const username = action.payload.username;
+	const account = state[username];
+	account.mapId = action.payload.mapId;
+};
+
 export {
 	addAccount,
 	setStatus,
 	setExtra,
 	setSelectedCharacter,
-	updateSequenceNumber
+	updateSequenceNumber,
+	setMapId
 };
