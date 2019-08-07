@@ -1,13 +1,12 @@
-import { accountsList } from "../Config";
-import { logger } from "../Libs";
+import { accountsList, general } from "../Config";
+import { logger, handleProxy } from "../Libs";
 import store from "../Modules/Store";
 import { accounts } from "../Modules/Store/reducers/slices";
 import Connection from "../Modules/Connection";
+// import Server from "../Modules/Server";
 import Socket from "../Modules/Connection/Socket";
 import Auth from "../Modules/Auth";
 import Game from "../Modules/Game";
-// import Network from "../Modules/Network";
-// import PluginManager from "../Modules/PluginManager"
 
 export default class ModuleLoader {
 	constructor() {
@@ -16,11 +15,14 @@ export default class ModuleLoader {
 			auth: Auth,
 			game: Game
 		};
+		/* if (general.server)
+			this.server = new Server(general.port, general.password); */
 	}
 
 	async mount() {
 		const { addAccount, setStatus } = accounts.actions;
 		for (let username in accountsList) {
+			const agent = handleProxy(accountsList[username].proxy);
 			logger.info(
 				`CONNECTION | ${username} | Initiating account [ Phase 1/3 ]`
 			);
@@ -30,7 +32,7 @@ export default class ModuleLoader {
 			let connection = new Connection({
 				username,
 				password: accountsList[username].password,
-				proxy: null
+				agent
 			});
 			try {
 				this.connections[username] = await connection.mount();
@@ -53,5 +55,6 @@ export default class ModuleLoader {
 				logger.info(`CONNECTION | ${username} | Hooked successfuly`);
 			});
 		}
+		// this.server.mount(this.connections);
 	}
 }

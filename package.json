@@ -1,14 +1,15 @@
 {
   "name": "difys",
-  "version": "0.0.1",
-  "description": "headless dofus touch botting client",
-  "main": "main.js",
+  "version": "0.1.0",
+  "description": "headless dofus touch botting framework",
+  "main": "index.js",
   "repository": "https://github.com/AlaaZorkane/Difys.git",
   "author": "Alaa Zorkane <Alaazorkane@gmail.com>",
   "license": "GPL-3.0-or-later",
   "private": false,
   "scripts": {
-    "start": "nodemon --exec babel-node ./src/index.js",
+    "start": "babel-node ./src/index.js",
+    "dev": "nodemon --exec babel-node ./src/index.js",
     "debug": "nodemon --exec babel-node --inspect-brk ./src/index.js",
     "redux": "nodemon --exec babel-node ./src/tests/redux.js",
     "got": "nodemon --exec babel-node ./src/tests/got.js",
@@ -33,20 +34,23 @@
     "remote-redux-devtools": "^0.5.16"
   },
   "dependencies": {
+    "@ctrl/cloudflare": "^1.4.3",
     "body-parser": "^1.19.0",
-    "brotli": "^1.3.2",
     "chalk": "^2.4.2",
-    "cloudscraper": "^4.1.2",
     "engine.io": "^3.3.2",
     "engine.io-client": "^3.3.2",
     "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "form-data": "^2.5.0",
     "fs-extra": "^8.1.0",
+    "graphql": "^14.4.2",
     "https-proxy-agent": "^2.2.2",
     "luxon": "^1.16.0",
     "primus": "^7.3.3",
     "redux": "^4.0.4",
     "redux-starter-kit": "^0.5.1",
-    "request": "^2.88.0",
+    "socks-proxy-agent": "^4.0.2",
+    "tough-cookie": "^3.0.1",
     "winston": "^3.2.1"
   }
 }

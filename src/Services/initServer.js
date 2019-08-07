@@ -11,7 +11,7 @@ const initServer = (port, password) => {
 	server.listen(port, () => {
 		logger.info(`Difys server running on port ${port}`);
 	});
-	server.get("/", (req, res) => {
+	server.get("/", (_req, res) => {
 		res.status(301).redirect("https://difys.now.sh/");
 	});
 	server.post("/api", (req, res) => {
@@ -35,7 +35,7 @@ const initServer = (port, password) => {
 			res.json({ message: "Wrong password" });
 		}
 	});
-	server.get("/api", (req, res) => {
+	server.get("/api", (_req, res) => {
 		res.status(301).redirect("https://difys.now.sh/");
 	});
 

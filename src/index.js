@@ -9,17 +9,10 @@ import {
 import ModuleLoader from "./Loaders/ModuleLoader";
 import PluginLoader from "./Loaders/PluginLoader";
 import { general } from "./Config";
-import { initServer } from "./Services";
 
 const { setMetadata } = metadata.actions;
 
 (async () => {
-	if (general.hasOwnProperty("server")) {
-		const port = general.server.port;
-		const password = general.server.password;
-		initServer(port, password);
-	}
-
 	logger.info("CORE | Initiating difys");
 
 	const core = new ModuleLoader();

@@ -1,13 +1,11 @@
 import got from "got";
-import HttpsProxyAgent from "https-proxy-agent";
 import { constants, general } from "../Config";
 import logger from "./Logger";
 
-async function getAppVersion(proxy) {
+async function getAppVersion() {
 	const params = constants.app.params(general.country, general.language);
 	const options = {
 		query: params.toString(),
-		agent: proxy ? new HttpsProxyAgent(proxy) : null,
 		json: true
 	};
 	try {
@@ -18,15 +16,12 @@ async function getAppVersion(proxy) {
 	}
 }
 // getAppVersion is working
-function getBuildVersion(proxy) {
+function getBuildVersion() {
 	const url = constants.baseUrl + constants.entries.build;
-	const options = {
-		agent: proxy ? new HttpsProxyAgent(proxy) : null
-	};
 	const regex = /.*buildVersion=("|')([0-9]*\.[0-9]*\.[0-9]*)("|')/g;
 	return new Promise(async (resolve, reject) => {
 		let request = await got
-			.stream(url, options)
+			.stream(url)
 			.on("data", buffer => {
 				const chunk = buffer.toString("utf8");
 
@@ -41,11 +36,10 @@ function getBuildVersion(proxy) {
 	});
 }
 
-async function getAssetsVersion(proxy) {
+async function getAssetsVersion() {
 	const url = `${constants.baseUrl}${constants.entries.assets}`;
 	try {
 		const { body } = await got(url, {
-			agent: proxy ? new HttpsProxyAgent(proxy) : null,
 			json: true
 		});
 		return {
@@ -59,6 +53,6 @@ async function getAssetsVersion(proxy) {
 
 export { getAppVersion, getBuildVersion, getAssetsVersion };
 
-/* getBuildVersion(proxy)
+/* getBuildVersion()
 	.then(console.log)
 	.catch(console.log); */

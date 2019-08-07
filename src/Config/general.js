@@ -2,7 +2,7 @@ const general = {
 	country: "fr", // languages and countries other than french are not 100% supported
 	language: "fr",
 	telemetry: true, // send us performance usage in order to make difys better, we won't steal your credentials
-	logLevel: "info", // Keep this at info if you don't want to spam your terminal
+	logLevel: "debug", // Keep this at info if you don't want to spam your terminal
 	antiAfk: false, // may affect performance
 	statusUpdates: {
 		enabled: true,

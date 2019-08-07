@@ -13,9 +13,11 @@ export default class PluginLoader {
 		for (let pluginName of pluginNames) {
 			const Plugin = require(`../Plugins/${pluginName}/index.js`).default;
 			this.plugins[pluginName] = new Plugin();
-			this.listeners = this.listeners.concat(
-				this.plugins[pluginName].listeners
-			);
+
+			// We can improve that logic by implementating array with scope in the event emitter
+			for (let listener of this.plugins[pluginName].listeners) {
+				this.listeners.push([listener, this.plugins[pluginName]]);
+			}
 		}
 	}
 

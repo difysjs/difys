@@ -62,7 +62,8 @@ export default class ChatMath {
 	async ChatServerMessage(payload) {
 		const { socket, data } = payload;
 		const { channel, content } = data;
-
+		console.log(this);
+		process.exit(1);
 		// We check if it's a private message or not
 		// 9 is the id for private messages
 		if (channel === 9) {

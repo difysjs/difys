@@ -9,12 +9,12 @@ const PrimusSocket = Primus.createSocket({
 });
 
 export default class Socket extends PrimusSocket {
-	constructor(sessionID, username) {
+	constructor(sessionID, username, agent) {
 		const state = store.getState();
 		const account = state.accounts[username];
 		const phase = account.status;
 		const socketUrl = Socket.getUrl(phase, account, sessionID);
-		const socketOptions = modules.socket.options();
+		const socketOptions = modules.socket.options(agent);
 		super(socketUrl, socketOptions);
 		this.phase = phase;
 		this.account = {
@@ -31,15 +31,12 @@ export default class Socket extends PrimusSocket {
 			data
 		};
 		this.write({ call, data });
-
-		// DEBUG
 		const message =
 			payload.call === "sendMessage" ? payload.data.type : payload.call;
 		logger.debug(`SOCKET | \u001b[32mSND\u001b[37m | ${message}`);
 	}
 
 	async sendMessage(type, data) {
-		// Emitter
 		this.send("sendMessage", { type, data });
 	}
 

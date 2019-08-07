@@ -5,13 +5,15 @@ import { constants } from "../../Config";
 import { accounts } from "../Store/reducers/slices";
 import { logger } from "../../Libs";
 import Socket from "./Socket";
-import cloudscraper from "cloudscraper";
+import { CookieJar } from "tough-cookie";
+import { catchCloudflare } from "@ctrl/cloudflare";
+import FormData from "form-data";
 
 export default class Connection {
 	constructor(account) {
+		this.agent = account.agent;
 		this.account = account;
 		this.socket = null;
-		// this.config = getConfig();
 		this.auth = {
 			apiKey: this.getHaapi(),
 			apiID: this.getApiID(),
@@ -35,7 +37,11 @@ export default class Connection {
 				status: "LOGGING IN"
 			})
 		);
-		this.socket = new Socket(this.auth.sessionID, this.account.username);
+		this.socket = new Socket(
+			this.auth.sessionID,
+			this.account.username,
+			this.agent
+		);
 		return this.socket;
 	}
 
@@ -55,26 +61,41 @@ export default class Connection {
 
 	async getHaapi() {
 		logger.debug("CORE | REQUEST | HaapiKey");
+
+		const form = new FormData();
+		form.append("login", this.account.username);
+		form.append("password", this.account.password);
+		const cookieJar = new CookieJar();
+		const url = `${constants.haapiUrl}${constants.entries.haapi}`;
+
+		const options = {
+			agent: this.agent,
+			cookieJar,
+			query: new URLSearchParams({
+				login: this.account.username,
+				password: this.account.password,
+				long_life_token: false
+			}).toString(),
+			body: form,
+			retry: 0
+		};
+		let response = {};
 		try {
-			const uri = `${constants.haapiUrl}${constants.entries.haapi}`;
-			const options = {
-				uri,
-				qs: new URLSearchParams({
-					login: this.account.username,
-					password: this.account.password,
-					long_life_token: false
-				}).toString(),
-				formData: {
-					login: this.account.username,
-					password: this.account.password
-				}
-			};
-			const response = JSON.parse(await cloudscraper.post(options));
-			this.auth.accountID = response.account_id;
-			return response.key;
+			response = JSON.parse((await got.post(url, options)).body);
 		} catch (error) {
 			logger.error(new Error(error));
+			logger.warn("Maybe CloudFlare? Trying to bypass...");
+			try {
+				response = JSON.parse(
+					(await catchCloudflare(error, options)).body
+				);
+			} catch (error) {
+				logger.error(new Error(error));
+			}
 		}
+		logger.debug("CORE | Got API Key successfuly");
+		this.auth.accountID = response.account_id;
+		return response.key;
 	}
 
 	async getToken(apiKey, apiID) {
@@ -82,6 +103,7 @@ export default class Connection {
 		try {
 			const url = `${constants.haapiUrl}${constants.entries.token}`;
 			const response = await got(url, {
+				agent: this.agent,
 				query: new URLSearchParams({
 					game: apiID
 				}).toString(),

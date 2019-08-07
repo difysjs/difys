@@ -5,6 +5,7 @@ import { logger } from "../../../Libs";
 
 export default function ServersListMessage(payload) {
 	const { socket, data } = payload;
+	console.log(data);
 	const {
 		setServersById,
 		setServersByName,
