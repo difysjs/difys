@@ -6,11 +6,12 @@
 	"editor.insertSpaces": false,
 	"editor.autoIndent": false,
 	"prettier.endOfLine": "lf",
-	"prettier.eslintIntegration": true,
+	"liveshare.shareExternalFiles": true,
+	"prettier.eslintIntegration": false,
 	"prettier.useTabs": true,
 	"prettier.tabWidth": 4,
 	"prettier.singleQuote": true,
 	"vetur.format.options.tabSize": 4,
 	"vetur.format.defaultFormatter.html": "prettier",
-	"vetur.format.options.useTabs": true,
+	"vetur.format.options.useTabs": true
 }

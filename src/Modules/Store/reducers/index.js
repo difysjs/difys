@@ -1,9 +1,12 @@
 import { combineReducers } from "redux";
-import { metadata, accounts } from "./slices";
+import slices from "./slices";
 
-const rootReducer = combineReducers({
-	metadata: metadata.reducer,
-	accounts: accounts.reducer
-});
+let reducers = {};
+
+for (let slice in slices) {
+	reducers[slice] = slices[slice].reducer;
+}
+
+const rootReducer = combineReducers(reducers);
 
 export default rootReducer;

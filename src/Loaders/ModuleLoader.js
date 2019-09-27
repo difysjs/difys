@@ -1,13 +1,13 @@
 import { accountsList } from "../Config";
-import { logger } from "../Libs";
+import { logger, handleProxy } from "../Libs";
 import store from "../Modules/Store";
-import { accounts } from "../Modules/Store/reducers/slices";
+import slices from "../Modules/Store/reducers/slices";
 import Connection from "../Modules/Connection";
 import Socket from "../Modules/Connection/Socket";
 import Auth from "../Modules/Auth";
 import Game from "../Modules/Game";
-// import Network from "../Modules/Network";
-// import PluginManager from "../Modules/PluginManager"
+
+const { addAccount, setStatus } = slices.accounts.actions;
 
 export default class ModuleLoader {
 	constructor() {
@@ -19,32 +19,27 @@ export default class ModuleLoader {
 	}
 
 	async mount() {
-		const { addAccount, setStatus } = accounts.actions;
-		for (let username in accountsList) {
-			logger.info(
-				`CONNECTION | ${username} | Initiating account [ Phase 1/3 ]`
-			);
+		const getInitPhaseText = (username, phase) =>
+			`CONNECTION | ${username} | Initiating account [ Phase ${phase} ]`;
 
+		for (const username in accountsList) {
+			const agent = handleProxy(accountsList[username].proxy);
+			logger.info(getInitPhaseText(username, "1/3"));
 			store.dispatch(addAccount({ username }));
 			store.dispatch(setStatus({ username, status: "INITIATING" }));
-			let connection = new Connection({
+			const connection = new Connection({
 				username,
 				password: accountsList[username].password,
-				proxy: null
+				agent
 			});
 			try {
 				this.connections[username] = await connection.mount();
-				logger.info(
-					`CONNECTION | ${username} | Initiating account [ Phase 2/3 ]`
-				);
+				logger.info(getInitPhaseText(username, "2/3"));
 			} catch (error) {
 				logger.error(new Error(error));
 			}
-			this.connections[username].load(this.listeners);
 			this.connections[username].on("destroy", () => {
-				logger.info(
-					`CONNECTION | ${username} | Initiating account [ Phase 3/3 ]`
-				);
+				logger.info(getInitPhaseText(username, "3/3"));
 				this.connections[username] = new Socket(
 					store.getState().accounts[username].auth.sessionID,
 					username

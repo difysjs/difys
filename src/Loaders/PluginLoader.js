@@ -1,4 +1,5 @@
 import fs from "fs";
+import { logger } from "../Libs";
 
 export default class PluginLoader {
 	constructor() {
@@ -6,22 +7,52 @@ export default class PluginLoader {
 		this.listeners = [];
 
 		const pluginNames = fs
-			.readdirSync("./src/Plugins/", { withFileTypes: true })
+			.readdirSync("./src/Plugins/", {
+				withFileTypes: true
+			})
 			.filter(file => file.isDirectory())
-			.map(fileInfo => fileInfo.name);
+			.map(file => file.name);
 
-		for (let pluginName of pluginNames) {
+		for (const pluginName of pluginNames) {
 			const Plugin = require(`../Plugins/${pluginName}/index.js`).default;
-			this.plugins[pluginName] = new Plugin();
-			this.listeners = this.listeners.concat(
-				this.plugins[pluginName].listeners
-			);
+			const plugin = new Plugin();
+			this.plugins[pluginName] = plugin;
 		}
 	}
 
-	mount(connections) {
+	async mount(connections) {
+		logger.info("CORE | Hooking up plugins");
+
 		for (let pluginName in this.plugins) {
-			this.plugins[pluginName].mount(connections);
+			const plugin = this.plugins[pluginName];
+			const requiredPlugins = plugin.package.requiredPlugins.filter(
+				name => !this.plugins.hasOwnProperty(name)
+			);
+			if (
+				(plugin.config && plugin.config.disabled) ||
+				requiredPlugins.length ||
+				(await plugin.mount(connections)) === false
+			) {
+				if (requiredPlugins.length == 0) {
+					logger.warn(`[${pluginName} Plugin] is disabled`);
+				} else {
+					logger.warn(
+						`[${pluginName} Plugin] Required plugins: ${requiredPlugins.join(
+							", "
+						)}`
+					);
+				}
+				delete this.plugins[pluginName];
+			} else {
+				// We can improve that logic by implementating array with scope in the event emitter
+				for (let listener of plugin.listeners) {
+					this.listeners.push([listener, plugin]);
+				}
+			}
 		}
+		Object.defineProperty(global, "Plugin", {
+			value: this.plugins,
+			enumerable: true
+		});
 	}
 }

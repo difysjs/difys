@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+require = require("esm")(module);
+const cli = require("../cli").cli;
+
+(async function() {
+	await cli(process.argv);
+})();

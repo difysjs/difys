@@ -1,14 +1,12 @@
-import HttpsProxyAgent from "https-proxy-agent";
-
 const modules = {
 	socket: {
-		options: proxy => {
+		options: agent => {
 			// const defaultUA = String;
 			return {
 				manual: true,
 				strategy: "disconnect,timeout",
 				transport: {
-					agent: proxy ? new HttpsProxyAgent(proxy) : null,
+					agent,
 					extraHeaders: {}
 				},
 				reconnect: {

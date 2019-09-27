@@ -1,22 +1,24 @@
 import store from "../../Store";
-import { accounts } from "../../Store/reducers/slices";
-import { accountsList } from "../../../Config";
+import slices from "../../Store/reducers/slices";
+import { accountsList, status } from "../../../Config";
 import { logger } from "../../../Libs";
+
+const {
+	setServersById,
+	setServersByName,
+	setSelectedServer,
+	setStatus
+} = slices.accounts.actions;
 
 export default function ServersListMessage(payload) {
 	const { socket, data } = payload;
-	const {
-		setServersById,
-		setServersByName,
-		setSelectedServer
-	} = accounts.actions;
 	const username = socket.account.username;
 	const accountConfig = accountsList[username];
 	const serversById = {};
 	const serversByName = {};
 
-	for (let server of data.servers) {
-		if (server.isSelectable && server.charactersCount) {
+	for (const server of data.servers) {
+		if (server.charactersCount) {
 			serversById[server.id] = {
 				name: server._name,
 				id: server.id,
@@ -45,26 +47,38 @@ export default function ServersListMessage(payload) {
 	store.dispatch(setServersByName({ username, serversByName }));
 
 	const directLogin = accountConfig.directLogin;
-	let selected;
+	var lastJoinedServer;
+
 	if (directLogin) {
-		let flag = 0;
-		for (let serverId in serversById) {
-			if (serversById[serverId].date > flag) {
-				selected = Number(serverId);
-				flag = serversById[serverId].date;
-			}
-		}
+		const lastJoinedDate = Math.max.apply(
+			null,
+			data.servers.map(server => new Date(server.date))
+		);
+		lastJoinedServer = data.servers.find(
+			server => server.date === lastJoinedDate
+		);
 	}
-	const serverId = directLogin
-		? selected
-		: serversByName[accountConfig.server].id;
+	const server = directLogin
+		? lastJoinedServer
+		: serversByName[accountConfig.server];
 
 	store.dispatch(
 		setSelectedServer({
 			username,
-			selectedServer: serversById[serverId].name
+			selectedServer: server.name
 		})
 	);
-
-	socket.sendMessage("ServerSelectionMessage", { serverId });
+	if (server.isSelectable) {
+		socket.sendMessage("ServerSelectionMessage", { serverId: server.id });
+	} else {
+		logger.info(
+			`Server Status | ${server.name} | ${status.server[server.status]}`
+		);
+		store.dispatch(
+			setStatus({
+				username,
+				status: "WAITING FOR SERVER"
+			})
+		);
+	}
 }

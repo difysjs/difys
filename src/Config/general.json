@@ -1,0 +1,21 @@
+{
+	"country": "fr",
+	"language": "fr",
+	"telemetry": true,
+	"logLevel": "debug",
+	"antiAfk": false,
+	"connectionDelay": 1500,
+	"statusUpdates": {
+		"enabled": true,
+		"interval": 1
+	},
+	"server": {
+		"enabled": false,
+		"port": 1337,
+		"password": "s3cr3tp4ssw0rd"
+	},
+	"proxies": {
+		"binaryUpdate": "",
+		"metadata": ""
+	}
+}

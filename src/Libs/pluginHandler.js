@@ -1,6 +1,9 @@
 import fs from "fs";
 import path from "path";
+import packageJSON from "../../package.json";
+import binaryList from "../Services/binaries/binaries.json";
 
+const pluginPackageFileName = "plugin.json";
 const pluginRootPath = "./src/Plugins/";
 const pluginPaths = getDirectoryList(pluginRootPath);
 
@@ -15,15 +18,15 @@ function getDirectoryList(dirPath) {
 
 function getPluginActions(pluginPath) {
 	if (fs.existsSync(pluginPath + "/actions")) {
-		let pluginName = pluginPath.split(path.sep).slice(-1)[0];
-		let actionsSets = getDirectoryList(pluginPath + "/actions");
+		const pluginName = pluginPath.split(path.sep).slice(-1)[0];
+		const actionsSets = getDirectoryList(pluginPath + "/actions");
 		let actions = [];
 
 		for (let actionsSet of actionsSets) {
-			let actionSliceType = actionsSet.split(path.sep).slice(-1)[0];
-			let actionFiles = fs.readdirSync(actionsSet);
+			const actionSliceType = actionsSet.split(path.sep).slice(-1)[0];
+			const actionFiles = fs.readdirSync(actionsSet);
 
-			for (let actionFileName of actionFiles) {
+			for (const actionFileName of actionFiles) {
 				actions.push({
 					slice: actionSliceType,
 					pluginName,
@@ -36,4 +39,70 @@ function getPluginActions(pluginPath) {
 	return [];
 }
 
-export { pluginPaths, getPluginActions };
+function getPluginsDependencies() {
+	let dependencies = [];
+
+	for (const pluginPath of pluginPaths) {
+		const pluginPackagePath = pluginPath + "\\" + pluginPackageFileName;
+		const pluginConfigPath = pluginPath + "\\" + "config.json";
+
+		if (fs.existsSync(pluginPackagePath)) {
+			const pluginPackage = require(pluginPackagePath);
+			const pluginConfig = require(pluginConfigPath);
+
+			if (
+				pluginConfig.disabled == false &&
+				pluginPackage.dependencies instanceof Array
+			) {
+				for (const dependency of pluginPackage.dependencies) {
+					if (/^[a-z0-9-@/]+$/i.test(dependency)) {
+						dependencies.push(dependency);
+					}
+				}
+			}
+		}
+	}
+	if (packageJSON.dependencies && dependencies.length) {
+		for (const key in packageJSON.dependencies) {
+			const index = dependencies.indexOf(key);
+
+			if (index > -1) {
+				dependencies.splice(index, 1);
+			}
+		}
+	}
+	return dependencies;
+}
+
+function getPluginsBinaries() {
+	let binaries = [];
+
+	for (const pluginPath of pluginPaths) {
+		const pluginPackagePath = pluginPath + "\\" + pluginPackageFileName;
+		const pluginConfigPath = pluginPath + "\\" + "config.json";
+
+		if (fs.existsSync(pluginPackagePath)) {
+			const pluginPackage = require(pluginPackagePath);
+			const pluginConfig = require(pluginConfigPath);
+
+			if (
+				pluginConfig.disabled == false &&
+				pluginPackage.binaries instanceof Array
+			) {
+				for (const binary of pluginPackage.binaries) {
+					if (binaryList.available.includes(binary)) {
+						binaries.push(binary);
+					}
+				}
+			}
+		}
+	}
+	return binaries;
+}
+
+export {
+	pluginPaths,
+	getPluginActions,
+	getPluginsDependencies,
+	getPluginsBinaries
+};

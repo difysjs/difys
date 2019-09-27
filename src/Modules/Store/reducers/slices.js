@@ -1,16 +1,14 @@
 import { createSlice } from "redux-starter-kit";
-import * as actions from "../actions";
+import actions from "../actions";
 
-const metadata = createSlice({
-	slice: "metadata",
-	initialState: {},
-	reducers: actions.metadataActions
-});
+let slices = {};
 
-const accounts = createSlice({
-	slice: "accounts",
-	initialState: {},
-	reducers: actions.accountActions
-});
+for (let action in actions) {
+	slices[action] = createSlice({
+		slice: action,
+		initialState: {},
+		reducers: actions[action]
+	});
+}
 
-export { metadata, accounts };
+export default slices;

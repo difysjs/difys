@@ -3,9 +3,17 @@ import {
 	getBuildVersion,
 	getAssetsVersion
 } from "./getMetadata";
-import logger from "./logger";
+import {
+	pluginPaths,
+	getPluginActions,
+	getPluginsDependencies,
+	getPluginsBinaries
+} from "./pluginHandler";
+import logger from "./Logger";
+import yarn from "./yarn";
 import EventEmitter from "./EventEmitter";
 import generateString from "./generateString";
+import handleProxy from "./handleProxy";
 
 export {
 	logger,
@@ -13,5 +21,11 @@ export {
 	getBuildVersion,
 	getAssetsVersion,
 	EventEmitter,
-	generateString
+	generateString,
+	handleProxy,
+	yarn,
+	pluginPaths,
+	getPluginActions,
+	getPluginsDependencies,
+	getPluginsBinaries
 };

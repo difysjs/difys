@@ -1,44 +1,37 @@
 import { accountsList } from "../../../Config";
 import store from "../../Store";
-import { accounts } from "../../Store/reducers/slices";
+import slices from "../../Store/reducers/slices";
+
+const { setSelectedCharacter, setStatus } = slices.accounts.actions;
 
 export default function CharactersListMessage(payload) {
 	const { socket, data } = payload;
 	const characters = data.characters;
 	const username = socket.account.username;
-	const { setSelectedCharacter, setStatus } = accounts.actions;
 
 	store.dispatch(setStatus({ username, status: "SELECTING CHARACTER" }));
 
-	let selectedCharacter;
-	if (!accountsList[username].directLogin) {
-		for (let charIndex = 0; charIndex < characters.length; charIndex++) {
-			if (characters[charIndex].name === accountsList[username].character)
-				selectedCharacter = characters[charIndex];
-			break;
-		}
-	} else {
-		selectedCharacter = characters[0];
-	}
-	selectedCharacter = {
-		breed: selectedCharacter.breed,
-		characterName: selectedCharacter.name,
-		level: selectedCharacter.level,
-		id: selectedCharacter.id,
-		look: selectedCharacter.entityLook,
-		sex: selectedCharacter.sex
-	};
+	const account = accountsList[username];
+	const character = account.directLogin
+		? characters[0]
+		: characters.find(c => c.name === account.character);
 
 	store.dispatch(
 		setSelectedCharacter({
 			username,
-			selectedCharacter
+			selectedCharacter: {
+				id: character.id,
+				breed: character.breed,
+				characterName: character.name,
+				level: character.level,
+				look: character.entityLook,
+				sex: character.sex
+			}
 		})
 	);
-
 	store.dispatch(setStatus({ username, status: "INITIATING GAME" }));
 
 	socket.sendMessage("CharacterSelectionMessage", {
-		id: selectedCharacter.id
+		id: character.id
 	});
 }

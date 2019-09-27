@@ -1,5 +1,7 @@
 import store from "../../Store";
-import { accounts } from "../../Store/reducers/slices";
+import slices from "../../Store/reducers/slices";
+
+const { setSelectedServerData, setStatus } = slices.accounts.actions;
 
 export default function SelectedServerDataMessage(payload) {
 	const { socket, data } = payload;
@@ -12,13 +14,13 @@ export default function SelectedServerDataMessage(payload) {
 		access: data._access
 	};
 	store.dispatch(
-		accounts.actions.setSelectedServerData({
+		setSelectedServerData({
 			username,
 			selectedServerData
 		})
 	);
 	store.dispatch(
-		accounts.actions.setStatus({
+		setStatus({
 			username,
 			status: "SWITCHING TO GAME"
 		})

@@ -3,11 +3,11 @@ import chalk from "chalk";
 import { DateTime } from "luxon";
 import { general } from "../Config";
 
-/* Handling date */
+// Handling date
 const date = () => DateTime.local();
 const time = () => chalk.grey.italic(`[${date().toFormat("hh:mm:ss")}]`);
 
-/* Difys custom logging config */
+// Difys custom logging config
 const loggerLevels = {
 	levels: {
 		error: 0,
@@ -26,7 +26,7 @@ const loggerLevels = {
 };
 addColors(loggerLevels.colors);
 
-/* Create the logger */
+// Create the logger
 const { combine, errors, colorize, printf } = format;
 const { Console, File } = transports;
 

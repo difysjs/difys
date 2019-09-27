@@ -1,11 +1,12 @@
-// import Socket from "./Socket";
 import store from "../Store";
 import got from "got";
 import { constants } from "../../Config";
-import { accounts } from "../Store/reducers/slices";
+import slices from "../Store/reducers/slices";
 import { logger } from "../../Libs";
 import Socket from "./Socket";
 import cloudscraper from "cloudscraper";
+
+const { setAuth, setStatus } = slices.accounts.actions;
 
 export default class Connection {
 	constructor(account) {
@@ -30,7 +31,7 @@ export default class Connection {
 		);
 		this.dispatch();
 		store.dispatch(
-			accounts.actions.setStatus({
+			setStatus({
 				username: this.account.username,
 				status: "LOGGING IN"
 			})
@@ -88,7 +89,6 @@ export default class Connection {
 				json: true,
 				headers: { apiKey }
 			});
-			// console.log(response.body.token);
 			return response.body.token;
 		} catch (error) {
 			logger.error(new Error(error));
@@ -96,7 +96,6 @@ export default class Connection {
 	}
 
 	dispatch() {
-		const { setAuth } = accounts.actions;
 		const username = this.account.username;
 		store.dispatch(setAuth({ username, auth: this.auth }));
 	}

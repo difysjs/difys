@@ -1,0 +1,10 @@
+{
+	"name": "ChatMath",
+	"description": "Because my friends can't do quik mafs",
+	"author": "Difys",
+	"version": "0.0.1",
+	"source": "https://github.com/difysjs/difys/blob/master/src/Plugins/ChatMath/plugin.json",
+	"requiredPlugins": [],
+	"dependencies": ["got"],
+	"binaries": []
+}

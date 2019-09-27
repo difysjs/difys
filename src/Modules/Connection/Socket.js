@@ -1,20 +1,19 @@
-// import HttpsProxyAgent from "https-proxy-agent";
 import Primus from "primus";
 import { modules, constants, general } from "../../Config";
 import store from "../Store";
+import ServerAck from "./serverAck";
 import { logger, EventEmitter } from "../../Libs";
 
 const PrimusSocket = Primus.createSocket({
 	transformer: "engine.io"
 });
-
 export default class Socket extends PrimusSocket {
-	constructor(sessionID, username) {
+	constructor(sessionID, username, agent) {
 		const state = store.getState();
 		const account = state.accounts[username];
 		const phase = account.status;
 		const socketUrl = Socket.getUrl(phase, account, sessionID);
-		const socketOptions = modules.socket.options();
+		const socketOptions = modules.socket.options(agent);
 		super(socketUrl, socketOptions);
 		this.phase = phase;
 		this.account = {
@@ -23,30 +22,24 @@ export default class Socket extends PrimusSocket {
 			key: []
 		};
 		this.server = "login";
+		this.serverAckSequenceNumber = 0;
 	}
 
-	async send(call, data = null) {
-		const payload = {
-			call,
-			data
-		};
+	send(call, data = null) {
 		this.write({ call, data });
-
-		// DEBUG
-		const message =
-			payload.call === "sendMessage" ? payload.data.type : payload.call;
+		const message = call === "sendMessage" ? data.type : call;
 		logger.debug(`SOCKET | \u001b[32mSND\u001b[37m | ${message}`);
 	}
 
-	async sendMessage(type, data) {
-		// Emitter
+	sendMessage(type, data) {
 		this.send("sendMessage", { type, data });
+		return new ServerAck(this.eventEmitter, this.serverAckSequenceNumber);
 	}
 
 	load(allListeners) {
 		const state = store.getState();
 		const { appVersion, buildVersion } = state.metadata;
-		const emitter = new EventEmitter();
+		this.eventEmitter = new EventEmitter();
 		let listeners = allListeners.auth;
 
 		if (this.phase === "SWITCHING TO GAME") {
@@ -58,8 +51,11 @@ export default class Socket extends PrimusSocket {
 			};
 			listeners = [].concat(allListeners.game, allListeners.plugins);
 		}
-		emitter.on(listeners);
-
+		this.eventEmitter.on(listeners);
+		this.eventEmitter.on(
+			"BasicAckMessage",
+			() => this.serverAckSequenceNumber++
+		);
 		this.on("open", () => {
 			this.send("connecting", {
 				language: general.language,
@@ -77,32 +73,29 @@ export default class Socket extends PrimusSocket {
 				logger.debug(
 					`SOCKET | \u001b[33mRCV\u001b[37m | ${data._messageType}`
 				);
-				emitter.emit(data._messageType, payload);
+				this.eventEmitter.emit(data._messageType, payload);
 			})
-			.on("reconnected", () => {
-				logger.debug(`TODO: reconnected`);
-			})
-			.on("error", error => {
-				logger.error(new Error(error));
-			})
+			.on("reconnected", () => logger.debug(`TODO: reconnected`))
+			.on("error", error => logger.error(new Error(error)))
 			.on("end", () => {
-				if (this.phase === "LOGGING IN")
+				if (this.phase === "LOGGING IN") {
 					logger.debug(`SOCKET | \u001b[33mSWITCHING TO GAME SERVER`);
-				else
+				} else {
 					logger.warn(
 						`\u001b[31m${this.account.username} disconnected`
 					);
+				}
 			})
 			.open();
 	}
 
 	static getUrl(phase, account, sessionID) {
-		let socketUrl = constants.baseUrl;
-		if (phase === "SWITCHING TO GAME") {
-			const auth = account.auth;
-			socketUrl = auth.selectedServerData.access;
-		}
-		let url = new URL(socketUrl);
+		const socketUrl =
+			phase === "SWITCHING TO GAME"
+				? account.auth.selectedServerData.access
+				: constants.baseUrl;
+
+		const url = new URL(socketUrl);
 		url.pathname = "/primus/";
 		url.searchParams.append("STICKER", sessionID);
 		return url.href;

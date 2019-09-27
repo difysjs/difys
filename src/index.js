@@ -1,31 +1,40 @@
 import store from "./Modules/Store";
-import { metadata } from "./Modules/Store/reducers/slices";
+import slices from "./Modules/Store/reducers/slices";
 import {
 	getAppVersion,
 	getBuildVersion,
 	getAssetsVersion,
-	logger
+	logger,
+	yarn,
+	getPluginsDependencies
 } from "./Libs";
-import ModuleLoader from "./Loaders/ModuleLoader";
-import PluginLoader from "./Loaders/PluginLoader";
+import ModuleLoader from "./Loaders/moduleLoader";
+import PluginLoader from "./Loaders/pluginLoader";
+import ScriptLoader from "./Loaders/scriptLoader";
+import runServices from "./Services";
 import { general } from "./Config";
-import { initServer } from "./Services";
 
-const { setMetadata } = metadata.actions;
+const { setMetadata } = slices.metadata.actions;
 
 (async () => {
-	if (general.hasOwnProperty("server")) {
-		const port = general.server.port;
-		const password = general.server.password;
-		initServer(port, password);
-	}
-
+	logger.info("CORE | Initiating services");
+	await runServices();
 	logger.info("CORE | Initiating difys");
+	logger.info("CORE | Checking for plugins dependencies");
+	const dependencies = getPluginsDependencies();
 
-	const core = new ModuleLoader();
-	const plugins = new PluginLoader();
+	if (await yarn.add(dependencies)) {
+		logger.info(
+			dependencies.length +
+				" plugin dependencies installed, please restart."
+		);
+		process.exit();
+	}
+	logger.info("CORE | No plugins dependencies need to be installed");
+	const moduleLoader = new ModuleLoader();
+	const pluginLoader = new PluginLoader();
+	const scriptLoader = new ScriptLoader();
 
-	core.listeners.plugins = plugins.listeners;
 	try {
 		const [assets, appVersion, buildVersion] = await Promise.all([
 			getAssetsVersion(),
@@ -36,6 +45,7 @@ const { setMetadata } = metadata.actions;
 			appVersion,
 			buildVersion,
 			assetsVersion: assets.assetsVersion,
+			assetsFullVersion: assets.assetsFullVersion,
 			staticDataVersion: assets.staticDataVersion
 		};
 		store.dispatch(setMetadata(metadata));
@@ -43,18 +53,24 @@ const { setMetadata } = metadata.actions;
 		logger.error(error);
 	}
 	logger.info("CORE | Loading accounts");
+
 	try {
-		await core.mount();
+		await moduleLoader.mount();
+		await scriptLoader.mount();
 	} catch (error) {
 		logger.error(new Error(error));
 	}
-	logger.info("CORE | Hooking up plugins");
-	plugins.mount(core.connections);
+	moduleLoader.listeners.plugins = pluginLoader.listeners;
+	await pluginLoader.mount(moduleLoader.connections);
 	logger.info("CORE | Plugins hooked successfuly");
+
+	for (let username in moduleLoader.connections) {
+		moduleLoader.connections[username].load(moduleLoader.listeners);
+	}
 	if (general.statusUpdates.enabled) {
 		setInterval(() => {
 			const accounts = store.getState().accounts;
-			for (const account in core.connections)
+			for (const account in moduleLoader.connections)
 				logger.info(
 					`| ${account} | \u001b[32m${accounts[account].status}`
 				);

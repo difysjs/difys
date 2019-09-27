@@ -1,9 +1,33 @@
 import store from "../../Store";
 
+function kpiStartCallBack(socket) {
+	socket.sendMessage("ObjectAveragePricesGetMessage");
+
+	socket.eventEmitter.once(
+		"BasicNoOperationMessage",
+		() => {
+			const username = socket.account.username;
+			const account = store.getState().accounts[username];
+			socket.sendMessage("MapInformationsRequestMessage", {
+				mapId: account.mapId
+			});
+		},
+		this
+	);
+}
+
 export default function kpiStartSessionMessage(payload) {
 	const { socket } = payload;
 	const username = socket.account.username;
-	const mapId = store.getState().accounts[username].mapId;
-	socket.sendMessage("ObjectAveragePricesGetMessage");
-	socket.sendMessage("MapInformationsRequestMessage", { mapId });
+	const account = store.getState().accounts[username];
+
+	if (account.gameContextCreated) {
+		kpiStartCallBack(socket);
+	} else {
+		socket.eventEmitter.once(
+			"GameContextCreateMessage",
+			() => kpiStartCallBack(socket),
+			this
+		);
+	}
 }

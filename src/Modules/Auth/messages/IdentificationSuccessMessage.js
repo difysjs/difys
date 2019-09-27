@@ -1,5 +1,5 @@
 import store from "../../Store";
-import { accounts } from "../../Store/reducers/slices";
+import slices from "../../Store/reducers/slices";
 import { logger } from "../../../Libs";
 
 export default function IdentificationSuccessMessage(payload) {
@@ -10,7 +10,8 @@ export default function IdentificationSuccessMessage(payload) {
 		accountSessionId: data.login,
 		subscribtionEndDate: data.subscriptionEndDate
 	};
-	store.dispatch(accounts.actions.setExtra({ username, extra }));
+	store.dispatch(slices.accounts.actions.setExtra({ username, extra }));
+
 	if (extra.subscribtionEndDate === 0)
 		logger.warn(`${username} is not subscribed`);
 }

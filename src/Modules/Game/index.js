@@ -7,6 +7,8 @@ import SequenceNumberRequestMessage from "./messages/SequenceNumberRequestMessag
 import BasicLatencyStatsRequestMessage from "./messages/BasicLatencyStatsRequestMessage";
 import kpiStartSessionMessage from "./messages/kpiStartSessionMessage";
 import CurrentMapMessage from "./messages/CurrentMapMessage";
+import MapComplementaryInformationsDataMessage from "./messages/MapComplementaryInformationsDataMessage";
+import GameContextCreateMessage from "./messages/GameContextCreateMessage";
 
 const Game = [
 	serverDisconnecting,
@@ -17,7 +19,9 @@ const Game = [
 	SequenceNumberRequestMessage,
 	BasicLatencyStatsRequestMessage,
 	kpiStartSessionMessage,
-	CurrentMapMessage
+	CurrentMapMessage,
+	MapComplementaryInformationsDataMessage,
+	GameContextCreateMessage
 ];
 
 export default Game;
