@@ -80,16 +80,55 @@ function downloadPlugin(filename, url) {
 	});
 }
 
+function getPluginFromGithubUserRepository(url) {
+	return new Promise((resolve, reject) => {
+		request.get(url, (error, response, body) => {
+			if (error) {
+				return reject(error);
+			}
+			resolve(body.match(/(?:difys-)(.*)(?:-plugin)/gi));
+		});
+	});
+}
+
+function getPluginListFromGithubUserRepository() {
+	return new Promise(async resolve => {
+		let pluginList = {};
+
+		for (const username in basePlugins) {
+			const url = basePlugins[username];
+			const nameList = await getPluginFromGithubUserRepository(url);
+			const list = new Set();
+
+			for (const pluginName of nameList) {
+				list.add(/(?:difys-)(.*)(?:-plugin)/gi.exec(pluginName)[1]);
+			}
+			pluginList[username] = [...list];
+		}
+		resolve(pluginList);
+	});
+}
+
 async function add(args) {
 	let pluginName = args[0];
 	let pluginUrl = pluginName;
 	const isUrl = urlRegex.test(pluginName);
 
-	// TODO: Use the base-plugins of github instead of a custom file with the list of base plugins
 	if (!isUrl) {
-		if (basePlugins[pluginName]) {
-			pluginUrl = basePlugins[pluginName];
-		} else {
+		const pluginList = await getPluginListFromGithubUserRepository();
+		let isBasePlugin = false;
+
+		for (const username in pluginList) {
+			const pluginIndex = pluginList[username].indexOf(
+				pluginName.toLowerCase()
+			);
+			if (pluginIndex > -1) {
+				pluginUrl = `https://codeload.github.com/${username}/difys-${pluginList[username][pluginIndex]}-plugin/zip/master`;
+				isBasePlugin = true;
+				break;
+			}
+		}
+		if (!isBasePlugin) {
 			logger.error(
 				new Error(`Plugin ${pluginName} is not a base plugin`)
 			);

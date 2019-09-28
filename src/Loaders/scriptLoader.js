@@ -44,15 +44,20 @@ export default class ScriptLoader {
 			const generator = start();
 			logger.info(`Script ${scriptName} executed`);
 			let s = 1;
+			let nextValue;
 
 			while (true) {
-				const next = await generator.next();
+				const next = generator.next(nextValue);
+				nextValue = undefined;
 
 				if (this.isGeneratorFunction(next.value)) {
-					const generator2 = next.value;
+					const generator2 = await next.value;
 
 					while (true) {
-						if ((await generator2.next(username)).done == true) {
+						const next2 = generator2.next(username);
+						nextValue = await next2.value;
+
+						if (next2.done == true) {
 							break;
 						}
 					}

@@ -19,22 +19,27 @@ function getDirectoryList(dirPath) {
 function getPluginActions(pluginPath) {
 	if (fs.existsSync(pluginPath + "/actions")) {
 		const pluginName = pluginPath.split(path.sep).slice(-1)[0];
-		const actionsSets = getDirectoryList(pluginPath + "/actions");
-		let actions = [];
+		const pluginConfigPath = pluginPath + "\\" + "config.json";
+		const pluginConfig = require(pluginConfigPath);
 
-		for (let actionsSet of actionsSets) {
-			const actionSliceType = actionsSet.split(path.sep).slice(-1)[0];
-			const actionFiles = fs.readdirSync(actionsSet);
+		if (!pluginConfig.disabled) {
+			const actionsSets = getDirectoryList(pluginPath + "/actions");
+			let actions = [];
 
-			for (const actionFileName of actionFiles) {
-				actions.push({
-					slice: actionSliceType,
-					pluginName,
-					path: actionsSet + path.sep + actionFileName
-				});
+			for (let actionsSet of actionsSets) {
+				const actionSliceType = actionsSet.split(path.sep).slice(-1)[0];
+				const actionFiles = fs.readdirSync(actionsSet);
+
+				for (const actionFileName of actionFiles) {
+					actions.push({
+						slice: actionSliceType,
+						pluginName,
+						path: actionsSet + path.sep + actionFileName
+					});
+				}
 			}
+			return actions;
 		}
-		return actions;
 	}
 	return [];
 }
