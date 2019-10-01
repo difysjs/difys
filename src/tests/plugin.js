@@ -1,6 +1,6 @@
 import runServices from "../Services";
 import store from "../Modules/Store";
-import { metadata, accounts } from "../Modules/Store/reducers/slices";
+import slices from "../Modules/Store/reducers/slices";
 import { accountsList } from "../Config";
 import {
 	getAppVersion,
@@ -9,12 +9,12 @@ import {
 	logger
 } from "../Libs";
 
-const { setMetadata } = metadata.actions;
+const { setMetadata } = slices.metadata.actions;
 
 (async function() {
 	await runServices();
 	for (const username in accountsList) {
-		store.dispatch(accounts.actions.addAccount({ username }));
+		store.dispatch(slices.accounts.actions.addAccount({ username }));
 	}
 	try {
 		const [assets, appVersion, buildVersion] = await Promise.all([

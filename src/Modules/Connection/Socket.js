@@ -22,7 +22,7 @@ export default class Socket extends PrimusSocket {
 			key: []
 		};
 		this.server = "login";
-		this.serverAckSequenceNumber = 0;
+		this.serverAckSequenceNumber = 1;
 	}
 
 	send(call, data = null) {
@@ -32,8 +32,13 @@ export default class Socket extends PrimusSocket {
 	}
 
 	sendMessage(type, data) {
+		const serverAck = new ServerAck(
+			this.eventEmitter,
+			this.serverAckSequenceNumber
+		);
 		this.send("sendMessage", { type, data });
-		return new ServerAck(this.eventEmitter, this.serverAckSequenceNumber);
+		this.serverAckSequenceNumber++;
+		return serverAck;
 	}
 
 	load(allListeners) {

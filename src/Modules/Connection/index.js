@@ -36,7 +36,11 @@ export default class Connection {
 				status: "LOGGING IN"
 			})
 		);
-		this.socket = new Socket(this.auth.sessionID, this.account.username);
+		this.socket = new Socket(
+			this.auth.sessionID,
+			this.account.username,
+			this.account.agent
+		);
 		return this.socket;
 	}
 
@@ -58,7 +62,7 @@ export default class Connection {
 		logger.debug("CORE | REQUEST | HaapiKey");
 		try {
 			const uri = `${constants.haapiUrl}${constants.entries.haapi}`;
-			const options = {
+			let options = {
 				uri,
 				qs: new URLSearchParams({
 					login: this.account.username,
@@ -70,6 +74,9 @@ export default class Connection {
 					password: this.account.password
 				}
 			};
+			if (typeof this.account.proxy === "string") {
+				options.proxy = this.account.proxy;
+			}
 			const response = JSON.parse(await cloudscraper.post(options));
 			this.auth.accountID = response.account_id;
 			return response.key;

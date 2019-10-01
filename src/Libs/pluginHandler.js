@@ -19,7 +19,7 @@ function getDirectoryList(dirPath) {
 function getPluginActions(pluginPath) {
 	if (fs.existsSync(pluginPath + "/actions")) {
 		const pluginName = pluginPath.split(path.sep).slice(-1)[0];
-		const pluginConfigPath = pluginPath + "\\" + "config.json";
+		const pluginConfigPath = pluginPath + path.sep + "config.json";
 		const pluginConfig = require(pluginConfigPath);
 
 		if (!pluginConfig.disabled) {
@@ -48,8 +48,8 @@ function getPluginsDependencies() {
 	let dependencies = [];
 
 	for (const pluginPath of pluginPaths) {
-		const pluginPackagePath = pluginPath + "\\" + pluginPackageFileName;
-		const pluginConfigPath = pluginPath + "\\" + "config.json";
+		const pluginPackagePath = pluginPath + path.sep + pluginPackageFileName;
+		const pluginConfigPath = pluginPath + path.sep + "config.json";
 
 		if (fs.existsSync(pluginPackagePath)) {
 			const pluginPackage = require(pluginPackagePath);
@@ -83,8 +83,8 @@ function getPluginsBinaries() {
 	let binaries = [];
 
 	for (const pluginPath of pluginPaths) {
-		const pluginPackagePath = pluginPath + "\\" + pluginPackageFileName;
-		const pluginConfigPath = pluginPath + "\\" + "config.json";
+		const pluginPackagePath = pluginPath + path.sep + pluginPackageFileName;
+		const pluginConfigPath = pluginPath + path.sep + "config.json";
 
 		if (fs.existsSync(pluginPackagePath)) {
 			const pluginPackage = require(pluginPackagePath);

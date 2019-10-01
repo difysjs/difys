@@ -19,14 +19,16 @@ export default class ChatMath {
 		allAccounts.forEach(username => {
 			// we check if the username exists in the difys core connections
 			if (connections.hasOwnProperty(username)) {
-				// we push the account and its socket into this.connections
-				// so that this.connections[account] returns the account socket
-				this.connections[username] = connections[username];
-
+				// In each accounts we have a "plugins" object where we can add a new entry to store data of our plugin
 				store.dispatch(
-					slices.accounts.actions.initChatMath({ username })
+					slices.accounts.actions.addPlugin({
+						username,
+						pluginName: this.package.name,
+						defaultValue: {
+							solves: 0
+						}
+					})
 				);
-
 				// we let the user know that we hooked the account
 				myLogger.info(`${username} hooked successfully!`);
 			} else {
@@ -39,8 +41,6 @@ export default class ChatMath {
 		});
 		// we inform the user that we finished mounting the plugin
 		myLogger.info("Finished mounting!");
-		// we return true to the difys core, letting it know that the mounting process was successful
-		return true;
 	}
 
 	async ChatServerMessage(payload) {
