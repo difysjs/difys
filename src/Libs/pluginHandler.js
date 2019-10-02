@@ -24,9 +24,9 @@ function getPluginActions(pluginPath) {
 
 		if (!pluginConfig.disabled) {
 			const actionsSets = getDirectoryList(pluginPath + "/actions");
-			let actions = [];
+			const actions = [];
 
-			for (let actionsSet of actionsSets) {
+			for (const actionsSet of actionsSets) {
 				const actionSliceType = actionsSet.split(path.sep).slice(-1)[0];
 				const actionFiles = fs.readdirSync(actionsSet);
 
@@ -45,7 +45,7 @@ function getPluginActions(pluginPath) {
 }
 
 function getPluginsDependencies() {
-	let dependencies = [];
+	const dependencies = [];
 
 	for (const pluginPath of pluginPaths) {
 		const pluginPackagePath = pluginPath + path.sep + pluginPackageFileName;
@@ -80,7 +80,7 @@ function getPluginsDependencies() {
 }
 
 function getPluginsBinaries() {
-	let binaries = [];
+	const binaries = [];
 
 	for (const pluginPath of pluginPaths) {
 		const pluginPackagePath = pluginPath + path.sep + pluginPackageFileName;

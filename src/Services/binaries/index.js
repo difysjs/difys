@@ -49,7 +49,7 @@ export default async function(enabledBinaries) {
 			constants.baseUrl + constants.entries.assets
 		);
 		const assetsVersion = assetsResponse.body.assetsVersion;
-		let requestOptions = await getRequestOptions(assetsVersion);
+		const requestOptions = await getRequestOptions(assetsVersion);
 
 		for (const binaryName of enabledBinaries) {
 			const Model = mongoose.models[binaryName];

@@ -57,10 +57,9 @@ export default class Socket extends PrimusSocket {
 			listeners = [].concat(allListeners.game, allListeners.plugins);
 		}
 		this.eventEmitter.on(listeners);
-		this.eventEmitter.on(
-			"BasicAckMessage",
-			() => this.serverAckSequenceNumber++
-		);
+		this.eventEmitter.on("BasicAckMessage", payload => {
+			this.serverAckSequenceNumber = payload.data.seq;
+		});
 		this.on("open", () => {
 			this.send("connecting", {
 				language: general.language,
