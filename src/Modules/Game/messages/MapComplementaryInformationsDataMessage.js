@@ -11,7 +11,7 @@ export default function MapComplementaryInformationsDataMessage(payload) {
 	if (account.status == "INITIATING GAME") {
 		setTimeout(
 			() => store.dispatch(setStatus({ username, status: "IDLE" })),
-			general.connectionDelay
+			general.delays.connection
 		);
 	} else {
 		store.dispatch(setStatus({ username, status: "IDLE" }));

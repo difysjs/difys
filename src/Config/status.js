@@ -1,4 +1,4 @@
-const status = {
+export default {
 	server: {
 		0: "STATUS_UNKNOWN",
 		1: "OFFLINE",
@@ -10,5 +10,3 @@ const status = {
 		7: "FULL"
 	}
 };
-
-export default status;

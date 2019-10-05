@@ -1,9 +1,9 @@
 import { createSlice } from "redux-starter-kit";
 import actions from "../actions";
 
-let slices = {};
+const slices = {};
 
-for (let action in actions) {
+for (const action in actions) {
 	slices[action] = createSlice({
 		slice: action,
 		initialState: {},

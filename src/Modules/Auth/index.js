@@ -6,6 +6,7 @@ import IdentificationFailedMessage from "./messages/IdentificationFailedMessage"
 import IdentificationFailedBannedMessage from "./messages/IdentificationFailedBannedMessage";
 import serverDisconnecting from "./messages/serverDisconnecting";
 import ServerStatusUpdateMessage from "./messages/ServerStatusUpdateMessage";
+import NicknameRegistrationMessage from "./messages/NicknameRegistrationMessage";
 
 const Auth = [
 	HelloConnectMessage,
@@ -15,7 +16,8 @@ const Auth = [
 	IdentificationFailedMessage,
 	IdentificationFailedBannedMessage,
 	serverDisconnecting,
-	ServerStatusUpdateMessage
+	ServerStatusUpdateMessage,
+	NicknameRegistrationMessage
 ];
 
 export default Auth;

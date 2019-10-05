@@ -1,8 +1,9 @@
 import store from "../../Store";
 import slices from "../../Store/reducers/slices";
 
+const { gameContextCreate } = slices.accounts.actions;
+
 export default function GameContextCreateMessage(payload) {
-	const { socket } = payload;
-	const username = socket.account.username;
-	store.dispatch(slices.accounts.actions.gameContextCreate({ username }));
+	const username = payload.socket.account.username;
+	store.dispatch(gameContextCreate({ username }));
 }

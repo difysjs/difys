@@ -8,6 +8,7 @@ function kpiStartCallBack(socket) {
 		() => {
 			const username = socket.account.username;
 			const account = store.getState().accounts[username];
+
 			socket.sendMessage("MapInformationsRequestMessage", {
 				mapId: account.mapId
 			});
@@ -18,8 +19,7 @@ function kpiStartCallBack(socket) {
 
 export default function kpiStartSessionMessage(payload) {
 	const { socket } = payload;
-	const username = socket.account.username;
-	const account = store.getState().accounts[username];
+	const account = store.getState().accounts[socket.account.username];
 
 	if (account.gameContextCreated) {
 		kpiStartCallBack(socket);

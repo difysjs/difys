@@ -28,13 +28,13 @@ function getBuildVersion() {
 	const regex = /.*buildVersion=("|')([0-9]*\.[0-9]*\.[0-9]*)("|')/g;
 
 	return new Promise(async (resolve, reject) => {
-		let request = await got
+		const request = await got
 			.stream(url, options)
 			.on("data", buffer => {
 				const chunk = buffer.toString("utf8");
 
 				if (chunk.includes("window.buildVersion")) {
-					let buildVersion = regex.exec(chunk)[2];
+					const buildVersion = regex.exec(chunk)[2];
 					request.emit("end");
 					request.removeAllListeners();
 					resolve(buildVersion);
@@ -54,7 +54,7 @@ async function getAssetsVersion() {
 		const config = await got(constants.baseUrl + constants.entries.config, {
 			json: true
 		});
-		let assetsFullVersion = config.body.assetsUrl.match(/\/([^/]+)\/?$/)[1];
+		const assetsFullVersion = config.body.assetsUrl.match(/\/([^/]+)\/?$/)[1];
 
 		return {
 			assetsFullVersion,

@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 import slices from "./slices";
 
-let reducers = {};
+const reducers = {};
 
-for (let slice in slices) {
+for (const slice in slices) {
 	reducers[slice] = slices[slice].reducer;
 }
 

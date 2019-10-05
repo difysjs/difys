@@ -4,7 +4,12 @@
 	"telemetry": true,
 	"logLevel": "debug",
 	"antiAfk": false,
-	"connectionDelay": 1500,
+	"fallbackServer": "Oshimo",
+	"delays": {
+		"connection": 1500,
+		"reconnection": 4000,
+		"nicknameRetry": 3000
+	},
 	"statusUpdates": {
 		"enabled": true,
 		"interval": 1

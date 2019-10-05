@@ -3,50 +3,52 @@ const addAccount = (state, action) => {
 	state[username] = {
 		username,
 		auth: { servers: {} },
-		extra: { selectedCharacter: {} },
+		extra: { selectedCharacter: {}, characters: {} },
 		plugins: {},
 		currentSequenceNumber: 0,
+		useDefaultCharactersListMessage: true,
 		gameContextCreated: false
 	};
 };
 
+const useDefaultCharactersListMessage = (state, action) => {
+	const { username, value } = action.payload;
+	state[username].useDefaultCharactersListMessage = value;
+};
+
 const setMapId = (state, action) => {
-	const username = action.payload.username;
-	const mapId = action.payload.mapId;
+	const { username, mapId } = action.payload;
 	state[username].mapId = mapId;
 };
 
 const setStatus = (state, action) => {
-	const username = action.payload.username;
-	const status = action.payload.status;
-	const account = state[username];
-	account.status = status;
+	const { username, status } = action.payload;
+	state[username].status = status;
 };
 
 const setExtra = (state, action) => {
-	const username = action.payload.username;
-	const account = state[username];
-	const extra = action.payload.extra;
-	account.extra = extra;
+	const { username, extra } = action.payload;
+	state[username].extra = extra;
 };
 
 const setSelectedCharacter = (state, action) => {
-	const username = action.payload.username;
-	const account = state[username];
-	const selectedCharacter = action.payload.selectedCharacter;
-	account.extra.selectedCharacter = selectedCharacter;
+	const { username, selectedCharacter } = action.payload;
+	state[username].extra.selectedCharacter = selectedCharacter;
+};
+
+const setcharacters = (state, action) => {
+	const { username, characters } = action.payload;
+	state[username].extra.characters = characters;
 };
 
 const updateSequenceNumber = (state, action) => {
 	const username = action.payload.username;
-	const account = state[username];
-	account.currentSequenceNumber++;
+	state[username].currentSequenceNumber++;
 };
 
 const addPlugin = (state, action) => {
 	const { username, pluginName, defaultValue } = action.payload;
-	const account = state[username];
-	account.plugins[pluginName] = defaultValue || {};
+	state[username].plugins[pluginName] = defaultValue || {};
 };
 
 const gameContextCreate = (state, action) => {
@@ -62,5 +64,7 @@ export {
 	setSelectedCharacter,
 	updateSequenceNumber,
 	addPlugin,
-	gameContextCreate
+	gameContextCreate,
+	useDefaultCharactersListMessage,
+	setcharacters
 };

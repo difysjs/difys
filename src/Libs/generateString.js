@@ -15,21 +15,25 @@ const checksum = str => {
 
 /**
  * Generate one random character
+ *
  * @returns {string}
  */
 const getRandomChar = () => {
-	let n = Math.ceil(Math.random() * 100);
-	if (n <= 40)
-		return String.fromCharCode(Math.floor(Math.random() * 26) + 65); // Majuscule
-	if (n <= 80)
-		return String.fromCharCode(Math.floor(Math.random() * 26) + 97); // Minuscule
-	return String.fromCharCode(Math.floor(Math.random() * 10) + 48); // Numero
+	const n = Math.ceil(Math.random() * 100);
+	if (n <= 40) {
+		return String.fromCharCode(Math.floor(Math.random() * 26) + 65); // Uppercase
+	}
+	if (n <= 80) {
+		return String.fromCharCode(Math.floor(Math.random() * 26) + 97); // Lowercase
+	}
+	return String.fromCharCode(Math.floor(Math.random() * 10) + 48); // Number
 };
 
-// Generate string of <length> characters, Example : "O6FBjgAe3KaKyqL2XSu5B"
 /**
- * Generate a string of `length` characters
+ * Generate string of <length> characters, Example : "O6FBjgAe3KaKyqL2XSu5B"
+ *
  * @param {number} length Length of characters to generate
+ *
  * @returns {string}
  */
 const generateString = (length = 10) => {

@@ -7,6 +7,7 @@ import { logger, EventEmitter } from "../../Libs";
 const PrimusSocket = Primus.createSocket({
 	transformer: "engine.io"
 });
+
 export default class Socket extends PrimusSocket {
 	constructor(sessionID, username, agent) {
 		const state = store.getState();

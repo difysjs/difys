@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 function connect() {
-	return new Promise(async (resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		mongoose.connect("mongodb://localhost:27017/gamedata", {
 			useNewUrlParser: true,
 			useUnifiedTopology: true
@@ -25,7 +25,7 @@ function loadSchemas() {
 
 		fs.readdir(schemaPath, (error, files) => {
 			if (!error) {
-				for (let fileName of files) {
+				for (const fileName of files) {
 					require(path.join(schemaPath, fileName));
 				}
 				resolve();

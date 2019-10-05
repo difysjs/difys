@@ -62,7 +62,7 @@ export default class Connection {
 		logger.debug("CORE | REQUEST | HaapiKey");
 		try {
 			const uri = `${constants.haapiUrl}${constants.entries.haapi}`;
-			let options = {
+			const options = {
 				uri,
 				qs: new URLSearchParams({
 					login: this.account.username,

@@ -1,11 +1,11 @@
 import store from "../../Store";
 import slices from "../../Store/reducers/slices";
-import { accountsList, status } from "../../../Config";
+import { accountsList, status, general } from "../../../Config";
 import { logger } from "../../../Libs";
 
 const {
 	setServersById,
-	setServersByName,
+	setserversIdByName,
 	setSelectedServer,
 	setStatus
 } = slices.accounts.actions;
@@ -15,7 +15,7 @@ export default function ServersListMessage(payload) {
 	const username = socket.account.username;
 	const accountConfig = accountsList[username];
 	const serversById = {};
-	const serversByName = {};
+	const serversIdByName = {};
 
 	for (const server of data.servers) {
 		if (server.charactersCount) {
@@ -28,23 +28,11 @@ export default function ServersListMessage(payload) {
 				gameTypeId: server._gameTypeId,
 				date: server.date
 			};
-			serversByName[server._name] = {
-				name: server._name,
-				id: server.id,
-				status: server.status,
-				completion: server.completion,
-				charactersCount: server.charactersCount,
-				gameTypeId: server._gameTypeId,
-				date: server.date
-			};
+			serversIdByName[server._name] = server.id;
 		}
 	}
-	if (!Object.getOwnPropertyNames(serversById).length) {
-		logger.error(new Error("Can't find any server to connect to."));
-		logger.error(new Error("Bad configuration or game servers down"));
-	}
 	store.dispatch(setServersById({ username, serversById }));
-	store.dispatch(setServersByName({ username, serversByName }));
+	store.dispatch(setserversIdByName({ username, serversIdByName }));
 
 	const directLogin = accountConfig.directLogin;
 	var lastJoinedServer;
@@ -54,13 +42,31 @@ export default function ServersListMessage(payload) {
 			null,
 			data.servers.map(server => new Date(server.date))
 		);
-		lastJoinedServer = data.servers.find(
-			server => server.date === lastJoinedDate
-		);
+		if (lastJoinedDate == 0) {
+			const defaultServer = general.fallbackServer;
+			lastJoinedServer = data.servers.find(s => s._name == defaultServer);
+
+			if (lastJoinedServer) {
+				logger.warn(
+					`Couldn't find a server, selected '${defaultServer}' by default`
+				);
+			} else {
+				logger.error(
+					new Error(
+						`Couldn't find the default server '${defaultServer}'`
+					)
+				);
+				return;
+			}
+		} else {
+			lastJoinedServer = data.servers.find(
+				s => s.date === lastJoinedDate
+			);
+		}
 	}
 	const server = directLogin
 		? lastJoinedServer
-		: serversByName[accountConfig.server];
+		: serversById[serversIdByName[accountConfig.server]];
 
 	store.dispatch(
 		setSelectedServer({

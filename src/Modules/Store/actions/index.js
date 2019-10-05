@@ -4,7 +4,7 @@ import * as authActions from "./accounts/auth";
 import logger from "../../../Libs/Logger";
 import { pluginPaths, getPluginActions } from "../../../Libs/pluginHandler";
 
-let actions = {
+const actions = {
 	metadata: Object.assign({}, ...Object.values({ metadataActions })),
 	accounts: Object.assign(
 		{},
@@ -12,16 +12,16 @@ let actions = {
 	)
 };
 
-for (let pluginPath of pluginPaths) {
+for (const pluginPath of pluginPaths) {
 	const pluginActionList = getPluginActions(pluginPath);
 
-	for (let action of pluginActionList) {
-		let pluginActions = require(action.path);
+	for (const action of pluginActionList) {
+		const pluginActions = require(action.path);
 
-		if (actions.hasOwnProperty(action.slice)) {
+		if (action.slice in actions) {
 			const pluginActionKeys = Object.keys(pluginActions);
 
-			for (let key in actions[action.slice]) {
+			for (const key in actions[action.slice]) {
 				if (pluginActionKeys.includes(key)) {
 					logger.error(
 						new Error(

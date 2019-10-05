@@ -3,12 +3,10 @@ import { general } from "../../../Config";
 
 export default function HelloGameMessage(payload) {
 	const { socket } = payload;
-	const username = socket.account.username;
-	const state = store.getState().accounts[username];
-	const ticket = state.auth.selectedServerData.ticket;
+	const account = store.getState().accounts[socket.account.username];
 
 	socket.sendMessage("AuthenticationTicketMessage", {
-		ticket,
+		ticket: account.auth.selectedServerData.ticket,
 		lang: general.language
 	});
 }

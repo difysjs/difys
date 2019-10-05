@@ -10,12 +10,15 @@ export default class ProxyRequest {
 	get(config) {
 		return this.sendRequest(config, "get");
 	}
+
 	post(config) {
 		return this.sendRequest(config, "post");
 	}
+
 	put(config) {
 		return this.sendRequest(config, "put");
 	}
+
 	delete(config) {
 		return this.sendRequest(config, "delete");
 	}
@@ -41,13 +44,10 @@ export default class ProxyRequest {
 		if (!config.headers["User-Agent"] && this.userAgent) {
 			config.headers["User-Agent"] = this.userAgent;
 		}
-		return new Promise(async (resolve, reject) => {
-			try {
-				const response = await got[config.method](config.url, config);
-				resolve(response);
-			} catch (error) {
-				reject(error.response.body);
-			}
+		return new Promise((resolve, reject) => {
+			got[config.method](config.url, config)
+				.then(resolve)
+				.catch(error => reject(error.response.body));
 		});
 	}
 }

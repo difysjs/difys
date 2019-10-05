@@ -51,7 +51,7 @@ function supportPlatform() {
 }
 
 function chooseOSType() {
-	return new Promise(async (resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		switch (platform) {
 			case "aix":
 				console.log(
@@ -60,12 +60,10 @@ function chooseOSType() {
 				process.exit();
 				break;
 			case "win32":
-				await downloadMongoDB(OSDownloadList[0]);
-				resolve();
+				downloadMongoDB(OSDownloadList[0]).then(resolve);
 				break;
 			case "darwin":
-				await downloadMongoDB(OSDownloadList[1]);
-				resolve();
+				downloadMongoDB(OSDownloadList[1]).then(resolve);
 				break;
 			default:
 				var rl = readline.createInterface({
@@ -76,16 +74,11 @@ function chooseOSType() {
 					`Please choose the MongoDB OS version you need:\n${mongoDBVersions
 						.map((version, index) => `${index + 1}. ${version}`)
 						.join("\n")}\n`,
-					async answer => {
+					answer => {
 						if (answer % 1 == 0 && answer >= 1 && answer <= 14) {
-							try {
-								await downloadMongoDB(
-									OSDownloadList[answer - 1]
-								);
-								resolve();
-							} catch (error) {
-								reject(error);
-							}
+							downloadMongoDB(OSDownloadList[answer - 1])
+								.then(resolve)
+								.catch(reject);
 						} else {
 							console.log(answer + " is not a valid asnwer");
 							chooseOSType();
@@ -110,7 +103,7 @@ function setupMongoDirectory(decompressPath) {
 				return reject(error);
 			}
 			let i = 0;
-			for (let file of mongoBinFiles) {
+			for (const file of mongoBinFiles) {
 				fs.rename(
 					path.join(mongoBinDirectory, file),
 					path.join(path.dirname(decompressPath), file),
@@ -149,15 +142,13 @@ function decompressMongoDBFile(filePath) {
 				);
 				break;
 			case ".zip":
-				const zip = new Zip(filePath);
+				var zip = new Zip(filePath);
 				zip.extractAllToAsync(unzipPath, false);
-				chmodr(filePath, 0o777, error => {
-					if (error) {
-						reject(error);
-					} else {
-						resolve(filePath.replace(extension, ""));
-					}
-				});
+				chmodr(filePath, 0o777, error =>
+					error
+						? reject(error)
+						: resolve(filePath.replace(extension, ""))
+				);
 				break;
 		}
 	});
@@ -209,25 +200,25 @@ function downloadMongoDB(pathname) {
 	});
 }
 
-export default function run() {
-	return new Promise(async (resolve, reject) => {
-		if ((await supportPlatform(platform)) === false) {
-			// Proceed to download MongoDB
-			try {
-				await chooseOSType();
-				console.log("MongoDB successfully installed");
-			} catch (error) {
-				return reject(error);
-			}
+export default async function run() {
+	if ((await supportPlatform(platform)) === false) {
+		// Proceed to download MongoDB
+		try {
+			await chooseOSType();
+			console.log("MongoDB successfully installed");
+		} catch (error) {
+			return Promise.reject(error);
 		}
+	}
+	return new Promise((resolve, reject) => {
 		console.log(
 			`\x1b[44m Service \x1b[0m MongoDB - \x1b[35mInitialising...\x1b[0m`
 		);
-		let serverStartFileName = fs
+		const serverStartFileName = fs
 			.readdirSync(path.join(__dirname, `/bin/${platform}/`))
 			.find(name => name.includes("mongod") && !name.includes("mdmp"));
 
-		let server = childProcess.spawn(
+		const server = childProcess.spawn(
 			`${__dirname}/bin/${platform}/${serverStartFileName}`,
 			["--dbpath", path.join(__dirname, "/data")]
 		);

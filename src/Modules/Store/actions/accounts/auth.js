@@ -1,42 +1,32 @@
 const setAuth = (state, action) => {
-	const username = action.payload.username;
-	const auth = action.payload.auth;
-	const account = state[username];
-	account.auth = auth;
+	const { username, auth } = action.payload;
+	state[username].auth = auth;
 };
 
 const setServersById = (state, action) => {
-	const username = action.payload.username;
-	const serversById = action.payload.serversById;
-	const account = state[username];
-	account.auth.serversById = serversById;
+	const { username, serversById } = action.payload;
+	state[username].auth.serversById = serversById;
 };
 
-const setServersByName = (state, action) => {
-	const username = action.payload.username;
-	const serversByName = action.payload.serversByName;
-	const account = state[username];
-	account.auth.serversByName = serversByName;
+const setserversIdByName = (state, action) => {
+	const { username, serversIdByName } = action.payload;
+	state[username].auth.serversIdByName = serversIdByName;
 };
 
 const setSelectedServer = (state, action) => {
-	const username = action.payload.username;
-	const selectedServer = action.payload.selectedServer;
-	const account = state[username];
-	account.auth.selectedServer = selectedServer;
+	const { username, selectedServer } = action.payload;
+	state[username].auth.selectedServer = selectedServer;
 };
 
 const setSelectedServerData = (state, action) => {
-	const username = action.payload.username;
-	const selectedServerData = action.payload.selectedServerData;
-	const account = state[username];
-	account.auth.selectedServerData = selectedServerData;
+	const { username, selectedServerData } = action.payload;
+	state[username].auth.selectedServerData = selectedServerData;
 };
 
 export {
 	setAuth,
 	setServersById,
-	setServersByName,
+	setserversIdByName,
 	setSelectedServerData,
 	setSelectedServer
 };

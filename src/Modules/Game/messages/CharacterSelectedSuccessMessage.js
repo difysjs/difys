@@ -2,14 +2,15 @@ import store from "../../Store";
 import { generateString } from "../../../Libs";
 import { general } from "../../../Config";
 
+const antiAFKInterval = 600000; // ms
+
 export default function CharacterSelectedSuccessMessage(payload) {
 	const { socket } = payload;
-	const username = socket.account.username;
-	const state = store.getState().accounts[username];
-	const isSubscriber = Number(state.extra.subscribtionEndDate) > 0;
+	const account = store.getState().accounts[socket.account.username];
+	const isSubscriber = Number(account.extra.subscribtionEndDate) > 0;
 
 	socket.send("kpiStartSession", {
-		accountSessionId: state.extra.accountSessionId,
+		accountSessionId: account.extra.accountSessionId,
 		isSubscriber
 	});
 	socket.send("moneyGoultinesAmountRequest");
@@ -31,7 +32,7 @@ export default function CharacterSelectedSuccessMessage(payload) {
 	if (general.antiAfk) {
 		setInterval(
 			() => socket.sendMessage("BasicPingMessage", { quiet: true }),
-			600000
+			antiAFKInterval
 		);
 	}
 }

@@ -1,9 +1,9 @@
 export default class EventEmitter {
 	constructor() {
 		this.scope = this;
-		this.backLog = true;
+		this.executingEvent = false;
 		this.events = {};
-		this.backLogs = [];
+		this.waitingEvents = [];
 		this.emittedEvents = [];
 	}
 
@@ -25,7 +25,7 @@ export default class EventEmitter {
 			args[0] = args[1].name;
 		}
 		if (args[0] instanceof Array) {
-			for (let funcArgs of args[0]) {
+			for (const funcArgs of args[0]) {
 				let nextArgs = funcArgs;
 				if (!(nextArgs instanceof Array)) {
 					nextArgs = [nextArgs];
@@ -58,7 +58,7 @@ export default class EventEmitter {
 	 * @param {Object} scope Reference class or object
 	 */
 	once(key, callback, scope) {
-		let index = this.on(
+		const index = this.on(
 			key,
 			data => {
 				this.emittedEvents.push([key, index]);
@@ -90,7 +90,7 @@ export default class EventEmitter {
 	 */
 	off(key, index = 0) {
 		if (key instanceof Array) {
-			for (let instance of key) {
+			for (const instance of key) {
 				this.off(instance);
 			}
 			return;
@@ -111,45 +111,36 @@ export default class EventEmitter {
 	}
 
 	/**
-	 * Execute callbacks emitted when their key didn't exist
-	 */
-	executeBackLog() {
-		var promises = [];
-
-		for (let event of this.backLogs) {
-			let params = [...event];
-			params.splice(0, 2);
-			let callback = event[1].call(event[0], ...params);
-
-			if (callback instanceof Promise) {
-				promises.push(callback);
-			}
-		}
-		this.backLogs = [];
-		return Promise.all(promises);
-	}
-
-	/**
 	 * Execute every callbacks on a specific key
 	 *
 	 * @param {String} key
 	 * @param  {Array|Object} data the data sent to callbacks
 	 */
-	emit(key, data) {
+	async emit(key, data) {
 		if (key in this.events) {
-			for (let event of this.events[key]) {
-				if (this.backLog) {
-					try {
-						event.callback.call(event.scope, data);
-					} catch (e) {
-						console.log(e);
-						this.backLogs.push([event.scope, event.callback, data]);
-					}
+			for (const event of this.events[key]) {
+				if (this.executingEvent) {
+					this.waitingEvents.push({ ...event, data });
 				} else {
-					event.callback.call(event.scope, data);
+					this.executingEvent = true;
+					await event.callback.call(event.scope, data);
+
+					let waitingEventsLength = this.waitingEvents.length;
+
+					while (waitingEventsLength) {
+						for (const waitingEvent of this.waitingEvents) {
+							await waitingEvent.callback.call(
+								waitingEvent.scope,
+								waitingEvent.data
+							);
+						}
+						this.waitingEvents.splice(0, waitingEventsLength);
+						waitingEventsLength = this.waitingEvents.length;
+					}
+					this.executingEvent = false;
 				}
 			}
-			for (let [key, index] of this.emittedEvents) {
+			for (const [key, index] of this.emittedEvents) {
 				this.off(key, index);
 			}
 			this.emittedEvents = [];

@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 import packageJSON from "../../package.json";
 import binaryList from "../Services/binaries/binaries.json";
+import yarn from "./yarn";
+import logger from "./Logger";
 
 const pluginPackageFileName = "plugin.json";
 const pluginRootPath = "./src/Plugins/";
@@ -79,6 +81,18 @@ function getPluginsDependencies() {
 	return dependencies;
 }
 
+async function updatePluginsDependencies() {
+	const dependencies = getPluginsDependencies();
+
+	if (await yarn.add(dependencies)) {
+		logger.info(
+			dependencies.length +
+				" plugin dependencies installed, please restart."
+		);
+		process.exit();
+	}
+}
+
 function getPluginsBinaries() {
 	const binaries = [];
 
@@ -109,5 +123,6 @@ export {
 	pluginPaths,
 	getPluginActions,
 	getPluginsDependencies,
-	getPluginsBinaries
+	getPluginsBinaries,
+	updatePluginsDependencies
 };

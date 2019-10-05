@@ -7,7 +7,8 @@ import {
 	pluginPaths,
 	getPluginActions,
 	getPluginsDependencies,
-	getPluginsBinaries
+	getPluginsBinaries,
+	updatePluginsDependencies
 } from "./pluginHandler";
 import logger from "./Logger";
 import yarn from "./yarn";
@@ -27,5 +28,6 @@ export {
 	pluginPaths,
 	getPluginActions,
 	getPluginsDependencies,
-	getPluginsBinaries
+	getPluginsBinaries,
+	updatePluginsDependencies
 };

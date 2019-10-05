@@ -8,9 +8,10 @@ import { logger } from "../Libs";
 export default class ScriptLoader {
 	async mount() {
 		for (const username in accountsList) {
-			const scriptName = accountsList[username].script;
+			const account = accountsList[username];
+			const scriptName = account.script;
 
-			if (scriptName) {
+			if (scriptName && account.disabled === false) {
 				const unSubscribe = store.subscribe(() => {
 					if (store.getState().accounts[username].status == "IDLE") {
 						this.runScript(username, scriptName);

@@ -28,15 +28,9 @@ async function getRequestOptions(assetsVersion) {
 
 function isModelEmpty(Model) {
 	return new Promise((resolve, reject) => {
-		Model.countDocuments((error, count) => {
-			if (error) {
-				reject(error);
-			} else if (count > 0) {
-				resolve(false);
-			} else {
-				resolve(true);
-			}
-		});
+		Model.countDocuments((error, count) =>
+			error ? reject(error) : resolve(count == 0)
+		);
 	});
 }
 

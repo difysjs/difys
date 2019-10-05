@@ -5,18 +5,21 @@ import { logger } from "../../../Libs";
 export default function ServerStatusUpdateMessage(payload) {
 	const { socket } = payload;
 	const account = store.getState().accounts[socket.account.username];
+	const serversIdByName = account.auth.serversIdByName;
 
 	if (account.status === "WAITING FOR SERVER") {
-		for (const serverName in account.auth.serversByName) {
-			const server = account.auth.serversByName[serverName];
+		return;
+	}
+	for (const serverName in serversIdByName) {
+		const serverId = serversIdByName[serverName];
+		const server = account.auth.serversById[serverId];
 
-			if (account.auth.selectedServer === server.name) {
-				logger.info(
-					`Server Status | ${server.name} | ${
-						status.server[server.status]
-					}`
-				);
-			}
+		if (account.auth.selectedServer === server.name) {
+			logger.info(
+				`Server Status | ${server.name} | ${
+					status.server[server.status]
+				}`
+			);
 		}
 	}
 }

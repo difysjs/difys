@@ -9,38 +9,24 @@ export default class ChatMath {
 		this.config = config;
 		this.package = pluginPackage;
 		this.listeners = [this.ChatServerMessage];
-		this.connections = {};
 	}
 
-	mount(connections) {
-		const allAccounts = this.config.accounts;
-		myLogger.info("Initiating...");
-		// we loop through each account in the config accounts array
-		allAccounts.forEach(username => {
-			// we check if the username exists in the difys core connections
-			if (connections.hasOwnProperty(username)) {
-				// In each accounts we have a "plugins" object where we can add a new entry to store data of our plugin
-				store.dispatch(
-					slices.accounts.actions.addPlugin({
-						username,
-						pluginName: this.package.name,
-						defaultValue: {
-							solves: 0
-						}
-					})
-				);
-				// we let the user know that we hooked the account
-				myLogger.info(`${username} hooked successfully!`);
-			} else {
-				// We didn't find any username in the difys core accounts that exists in our config
-				// We let the user know, maybe he mispelled the account username?
-				myLogger.warn(
-					`${username} doesn't exist in the difys core, are you sure it's correct username?`
-				);
-			}
-		});
+	mount() {
 		// we inform the user that we finished mounting the plugin
-		myLogger.info("Finished mounting!");
+		myLogger.info("Mounted");
+	}
+
+	hook(account) {
+		// In each accounts we have a "plugins" object where we can add a new entry to store data of our plugin
+		// we let the user know that we hooked the account
+		store.dispatch(
+			slices.accounts.actions.addPlugin({
+				username: account.username,
+				pluginName: this.package.name,
+				defaultValue: { solves: 0 }
+			})
+		);
+		myLogger.info(`${account.username} hooked successfully!`);
 	}
 
 	async ChatServerMessage(payload) {

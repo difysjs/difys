@@ -2,6 +2,8 @@ import store from "../../Store";
 import slices from "../../Store/reducers/slices";
 import { logger } from "../../../Libs";
 
+const { setExtra } = slices.accounts.actions;
+
 export default function IdentificationSuccessMessage(payload) {
 	const { socket, data } = payload;
 	const username = socket.account.username;
@@ -10,8 +12,8 @@ export default function IdentificationSuccessMessage(payload) {
 		accountSessionId: data.login,
 		subscribtionEndDate: data.subscriptionEndDate
 	};
-	store.dispatch(slices.accounts.actions.setExtra({ username, extra }));
-
-	if (extra.subscribtionEndDate === 0)
+	if (extra.subscribtionEndDate === 0) {
 		logger.warn(`${username} is not subscribed`);
+	}
+	store.dispatch(setExtra({ username, extra }));
 }
