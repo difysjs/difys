@@ -112,13 +112,11 @@ function App(data) {
 		sendRequest({
 			username: username.value,
 			plugin: pluginList.value,
-			method: Array.from(methodList.children).find(
-				el => el.classList.contains("active").textContent
-			),
-			data: JSON.parse(
-				Array.from(clientSection.querySelectorAll("input#data")).map(
-					el => el.value
-				)
+			method: Array.from(methodList.children).find(el =>
+				el.classList.contains("active")
+			).children[0].textContent,
+			data: Array.from(clientSection.querySelectorAll("input#data")).map(
+				el => el.value
 			)
 		}).catch(console.log);
 	});
