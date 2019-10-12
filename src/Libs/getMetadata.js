@@ -2,6 +2,8 @@ import got from "got";
 import HttpsProxyAgent from "https-proxy-agent";
 import { constants, general } from "../Config";
 import lastBuildVersion from "../Config/lastBuildVersion.json";
+import fs from "fs";
+import path from "path";
 import logger from "./Logger";
 
 const proxy = general.proxies.metadata;
@@ -41,6 +43,14 @@ function getBuildVersion() {
 					if (lastBuildVersion.current != buildVersion) {
 						logger.warn(
 							`CORE | A new version of the game has been detected. The current version of Difys might not work properly. Restart Difys if you want to execute anyway.`
+						);
+						lastBuildVersion.current = buildVersion;
+						fs.writeFileSync(
+							path.join(
+								__dirname,
+								"../Config/lastBuildVersion.json"
+							),
+							JSON.stringify(lastBuildVersion, null, 4)
 						);
 						process.exit();
 					} else {
