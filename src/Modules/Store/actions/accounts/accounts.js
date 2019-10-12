@@ -11,6 +11,10 @@ const addAccount = (state, action) => {
 	};
 };
 
+const removeAccount = (state, action) => {
+	delete state[action.payload.username];
+};
+
 const useDefaultCharactersListMessage = (state, action) => {
 	const { username, value } = action.payload;
 	state[username].useDefaultCharactersListMessage = value;
@@ -66,5 +70,6 @@ export {
 	addPlugin,
 	gameContextCreate,
 	useDefaultCharactersListMessage,
-	setcharacters
+	setcharacters,
+	removeAccount
 };

@@ -116,26 +116,35 @@ export default class EventEmitter {
 	 * @param {String} key
 	 * @param  {Array|Object} data the data sent to callbacks
 	 */
-	async emit(key, data) {
+	emit(key, data) {
 		if (key in this.events) {
 			for (const event of this.events[key]) {
 				if (this.executingEvent) {
 					this.waitingEvents.push({ ...event, data });
 				} else {
 					this.executingEvent = true;
-					await event.callback.call(event.scope, data);
+					event.callback.call(event.scope, data);
 
 					let waitingEventsLength = this.waitingEvents.length;
 
 					while (waitingEventsLength) {
-						for (const waitingEvent of this.waitingEvents) {
-							await waitingEvent.callback.call(
-								waitingEvent.scope,
-								waitingEvent.data
+						const waitingEvents = this.waitingEvents.slice(0);
+						this.waitingEvents.splice(0, waitingEventsLength);
+						let next = waitingEvents[0].callback.call(
+							waitingEvents[0].scope,
+							waitingEvents[0].data
+						);
+						for (let i = 1; i < waitingEventsLength; i++) {
+							next = next.then(() =>
+								waitingEvents[i].callback.call(
+									waitingEvents[i].scope,
+									waitingEvents[i].data
+								)
 							);
 						}
-						this.waitingEvents.splice(0, waitingEventsLength);
-						waitingEventsLength = this.waitingEvents.length;
+						next.then(() => {
+							waitingEventsLength = this.waitingEvents.length;
+						});
 					}
 					this.executingEvent = false;
 				}

@@ -7,7 +7,7 @@ import Socket from "../Modules/Connection/Socket";
 import Auth from "../Modules/Auth";
 import Game from "../Modules/Game";
 
-const { addAccount, setStatus } = slices.accounts.actions;
+const { addAccount, removeAccount, setStatus } = slices.accounts.actions;
 
 export default class ModuleLoader {
 	constructor() {
@@ -96,12 +96,27 @@ export default class ModuleLoader {
 			global.Plugin[pluginName].connections[username] = socket;
 		}
 		socket.load(this.listeners);
-		socket.account.reconnect = () => {
+		socket.account.disconnect = () => {
 			socket.send("disconnecting", "CLIENT_CLOSING");
-			setTimeout(
-				() => this.connectAccount(account),
-				general.delays.reconnect
+
+			for (const pluginName in global.Plugin) {
+				const plugin = global.Plugin[pluginName];
+				delete plugin.connections[socket.account.username];
+			}
+			delete this.connections[socket.account.username];
+			store.dispatch(
+				removeAccount({ username: socket.account.username })
 			);
+		};
+		socket.account.connect = this.connectAccount;
+		socket.account.reconnect = () => {
+			return new Promise(resolve => {
+				socket.account.disconnect();
+				setTimeout(
+					async () => resolve(await socket.account.connect(account)),
+					general.delays.reconnect
+				);
+			});
 		};
 		this.connections[username] = socket;
 		logger.info(`CONNECTION | ${username} | Hooked successfuly`);

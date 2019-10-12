@@ -40,7 +40,7 @@ import runServices from "./Services";
 		);
 		await pluginLoader.mount();
 		await moduleLoader.mount(pluginLoader);
-		await scriptLoader.mount();
+		await scriptLoader.mount(moduleLoader);
 		moduleLoader.connectAccounts();
 	} catch (error) {
 		logger.error(error);

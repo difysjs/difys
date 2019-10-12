@@ -1,6 +1,7 @@
 import got from "got";
 import HttpsProxyAgent from "https-proxy-agent";
 import { constants, general } from "../Config";
+import lastBuildVersion from "../Config/lastBuildVersion.json";
 import logger from "./Logger";
 
 const proxy = general.proxies.metadata;
@@ -27,8 +28,8 @@ function getBuildVersion() {
 	};
 	const regex = /.*buildVersion=("|')([0-9]*\.[0-9]*\.[0-9]*)("|')/g;
 
-	return new Promise(async (resolve, reject) => {
-		const request = await got
+	return new Promise((resolve, reject) => {
+		const request = got
 			.stream(url, options)
 			.on("data", buffer => {
 				const chunk = buffer.toString("utf8");
@@ -37,7 +38,14 @@ function getBuildVersion() {
 					const buildVersion = regex.exec(chunk)[2];
 					request.emit("end");
 					request.removeAllListeners();
-					resolve(buildVersion);
+					if (lastBuildVersion.current != buildVersion) {
+						logger.warn(
+							`CORE | A new version of the game has been detected. The current version of Difys might not work properly. Restart Difys if you want to execute anyway.`
+						);
+						process.exit();
+					} else {
+						resolve(buildVersion);
+					}
 				}
 			})
 			.on("error", reject);
@@ -54,7 +62,9 @@ async function getAssetsVersion() {
 		const config = await got(constants.baseUrl + constants.entries.config, {
 			json: true
 		});
-		const assetsFullVersion = config.body.assetsUrl.match(/\/([^/]+)\/?$/)[1];
+		const assetsFullVersion = config.body.assetsUrl.match(
+			/\/([^/]+)\/?$/
+		)[1];
 
 		return {
 			assetsFullVersion,

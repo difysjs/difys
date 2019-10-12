@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>LiveScript</title>
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+			integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+			crossorigin="anonymous"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Major+Mono+Display&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="/css/main.css" />
+	</head>
+	<body>
+		<section class="container-fluid d-flex" id="authentication">
+			<div class="col-4 mx-auto text-center">
+				<div class="row">
+					<div class="col-12">
+						<h2><span>Live</span>Script</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col" style="padding-right:0;">
+						<input
+							type="password"
+							class="form-control placeholder-center"
+							id="password"
+							placeholder="Mot de passe"
+						/>
+					</div>
+					<div class="col-3" style="padding:0;">
+						<button
+							type="button"
+							class="btn btn-outline-success"
+							id="passwordtest"
+						>
+							Accéder
+						</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="container" style="display:none !important;" id="client">
+			<div class="col-10 mx-auto">
+				<div class="row" id="script">
+					<header class="col-12">
+						<h2>Exécuter un script</h2>
+					</header>
+					<div class="col-12 form-group">
+						<div id="scriptCode">function* start() { }</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 col-lg-4 form-group">
+						<select class="form-control" id="usernames"></select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 col-md-3 col-lg-2 form-group">
+						<button
+							type="button"
+							class="btn btn-small btn-dark"
+							id="sendScript"
+						>
+							Exécuter
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-10 mx-auto" style="display:none;">
+				<div class="row" id="command">
+					<header class="col-12">
+						<h2>Envoyer une commande</h2>
+					</header>
+					<div class="col-12 form-group">
+						<select class="form-control" id="plugins"></select>
+					</div>
+					<div class="col-auto col-lg-12 form-group">
+						<ul class="list-group" id="methods"></ul>
+					</div>
+					<div class="col-12 form-group">
+						<input class="form-control" type="text" id="data" />
+					</div>
+					<div class="col-12 form-group">
+						<select class="form-control" id="usernames"></select>
+					</div>
+					<div class="col-12 form-group">
+						<button
+							type="button"
+							class="btn btn-small btn-dark"
+							id="runCommand"
+						>
+							Exécuter
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-auto switchSection">
+				Envoyer une commande <i class="fas fa-angle-double-right"></i>
+			</div>
+		</section>
+		<!--
+		<section class="container" style="display:none !important;" id="client">
+			<div class="col-8 mx-auto">
+				<div class="row">
+					<div class="col-12">
+						<div class="col-12 form-group">
+							<button
+								type="button"
+								class="btn btn-warning w-100"
+								id="fetchStoreData"
+							>
+								Récupérer toutes les données des bots
+							</button>
+						</div>
+						<div class="col-6 form-group" style="display:none;">
+							<input
+								type="text"
+								class="form-control"
+								id="storagePassword"
+								placeholder="Mot de passe (Store API)"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		-->
+
+		<script src="/js/main.js"></script>
+		<script src="/js/auth.js"></script>
+		<script
+			async
+			src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.23/bootstrap-native-v4.min.js"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-javascript.js"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/theme-chrome.js"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>

@@ -14,10 +14,18 @@
 		"enabled": true,
 		"interval": 1
 	},
-	"server": {
-		"enabled": false,
-		"port": 1337,
-		"password": "s3cr3tp4ssw0rd"
+	"api": {
+		"store": {
+			"enabled": true,
+			"websocket": false,
+			"port": 1337,
+			"password": "admin"
+		},
+		"livescript": {
+			"enabled": true,
+			"port": 1338,
+			"password": "admin"
+		}
 	},
 	"proxies": {
 		"binaryUpdate": "",

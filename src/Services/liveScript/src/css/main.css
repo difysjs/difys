@@ -1,0 +1,109 @@
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-image: radial-gradient(white, #eaeaea);
+}
+
+.placeholder-center::-webkit-input-placeholder {
+	text-align: center;
+}
+
+section#authentication {
+	background-image: radial-gradient(white, #ccc);
+}
+
+section#authentication h2 {
+	font-family: "Major Mono Display", monospace;
+	font-size: 3rem;
+	margin-bottom: 5rem;
+}
+
+section#authentication h2 > span {
+	color: #2fa796;
+}
+
+.d-flex {
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+}
+
+input#password {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	outline: none;
+	box-shadow: none;
+	border-right: none;
+}
+
+input#password:focus {
+	border: 1px solid #28a745;
+	border-right: none;
+}
+
+button#passwordtest {
+	width: 100%;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	outline: none;
+	box-shadow: none;
+}
+
+button#sendScript {
+	width: 100%;
+	padding: 1px 5px;
+}
+
+section#client {
+	padding: 2rem;
+}
+
+section#client .row:first-child {
+	margin-top: 0;
+}
+
+section#client header > h2 {
+	font-family: "Major Mono Display", monospace;
+	margin-bottom: 3rem;
+}
+
+ul#methods li {
+	cursor: pointer;
+}
+
+ul#methods li.active {
+	background-color: #2fa796;
+	border-color: #249282;
+}
+
+#scriptCode {
+	position: relative;
+	width: 100%;
+	font-size: 14px;
+	border: 1px solid #ccc;
+}
+
+.switchSection {
+	position: fixed;
+	top: 0;
+	right: 0;
+	padding: 5px 15px;
+	cursor: pointer;
+	text-align: center;
+	font-weight: bold;
+	font-family: sans-serif;
+	font-size: 16px;
+	color: inherit;
+
+	transition: color 0.4s;
+}
+
+.switchSection:hover {
+	color: #5b646d;
+}
+
+.switchSection > i {
+	margin-left: 5px;
+}
