@@ -30,19 +30,29 @@ const setStatus = (state, action) => {
 	state[username].status = status;
 };
 
-const setExtra = (state, action) => {
-	const { username, extra } = action.payload;
-	state[username].extra = extra;
-};
-
 const setSelectedCharacter = (state, action) => {
 	const { username, selectedCharacter } = action.payload;
 	state[username].extra.selectedCharacter = selectedCharacter;
 };
 
-const setcharacters = (state, action) => {
+const setCharacters = (state, action) => {
 	const { username, characters } = action.payload;
 	state[username].extra.characters = characters;
+};
+
+const setNickname = (state, action) => {
+	const { username, nickname } = action.payload;
+	state[username].extra.nickname = nickname;
+};
+
+const setSubscribtionEndDate = (state, action) => {
+	const { username, date } = action.payload;
+	state[username].extra.subscribtionEndDate = date;
+};
+
+const setAccountSessionId = (state, action) => {
+	const { username, sessionId } = action.payload;
+	state[username].extra.accountSessionId = sessionId;
 };
 
 const updateSequenceNumber = (state, action) => {
@@ -64,12 +74,14 @@ export {
 	addAccount,
 	setMapId,
 	setStatus,
-	setExtra,
 	setSelectedCharacter,
 	updateSequenceNumber,
 	addPlugin,
 	gameContextCreate,
 	useDefaultCharactersListMessage,
-	setcharacters,
-	removeAccount
+	setCharacters,
+	removeAccount,
+	setNickname,
+	setAccountSessionId,
+	setSubscribtionEndDate
 };

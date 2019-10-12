@@ -5,7 +5,7 @@ import slices from "../../Store/reducers/slices";
 const {
 	setSelectedCharacter,
 	setStatus,
-	setcharacters
+	setCharacters
 } = slices.accounts.actions;
 
 export default async function CharactersListMessage(payload) {
@@ -14,20 +14,20 @@ export default async function CharactersListMessage(payload) {
 	const username = socket.account.username;
 	const account = store.getState().accounts[username];
 
-	store.dispatch(setcharacters({ username, characters }));
+	store.dispatch(setCharacters({ username, characters }));
 
 	if (characters.length && account.useDefaultCharactersListMessage) {
 		store.dispatch(setStatus({ username, status: "SELECTING CHARACTER" }));
 
-		const account = accountsList[username];
 		let character;
-
 		if (Object.keys(account.extra.selectedCharacter).length) {
 			character = account.extra.selectedCharacter;
 		} else {
-			character = account.directLogin
+			character = accountsList[username].directLogin
 				? characters[0]
-				: characters.find(c => c.name === account.character);
+				: characters.find(
+						c => c.name === accountsList[username].character
+				  );
 
 			store.dispatch(
 				setSelectedCharacter({
