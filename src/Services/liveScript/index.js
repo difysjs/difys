@@ -5,16 +5,15 @@ import { general, accountsList } from "../../Config";
 import { logger, pluginPaths } from "../../Libs";
 import ScriptLoader from "../../Loaders/scriptLoader";
 
-var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
-var ARGUMENT_NAMES = /([^\s,]+)/g;
+const commentsRegex = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
+const argumentNamesRegex = /([^\s,]+)/g;
 
 function getParamNames(func) {
-	var fnStr = func.toString().replace(STRIP_COMMENTS, "");
-	var result = fnStr
+	const fnStr = func.toString().replace(commentsRegex, "");
+	const result = fnStr
 		.slice(fnStr.indexOf("(") + 1, fnStr.indexOf(")"))
-		.match(ARGUMENT_NAMES);
-	if (result === null) result = [];
-	return result;
+		.match(argumentNamesRegex);
+	return result || [];
 }
 
 export default function() {
@@ -47,7 +46,7 @@ export default function() {
 				});
 				const pluginData = plugins[pluginName][methodLength - 1];
 				const args = getParamNames(Plugin[pluginData.name]);
-				var defaultParam = args.indexOf("=");
+				let defaultParam = args.indexOf("=");
 
 				while (defaultParam > -1) {
 					args.splice(defaultParam, 2);

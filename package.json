@@ -1,6 +1,6 @@
 {
 	"name": "difys",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"description": "headless dofus touch botting framework",
 	"main": "src/index.js",
 	"repository": "https://github.com/AlaaZorkane/Difys.git",
@@ -17,7 +17,7 @@
 		"node": ">=12"
 	},
 	"scripts": {
-		"start": "babel-node ./src/index.js",
+		"start": "babel-node --experimental-worker ./src/index.js",
 		"dev": "nodemon --exec babel-node ./src/index.js",
 		"debug": "nodemon --exec babel-node --inspect-brk ./src/index.js",
 		"redux": "nodemon --exec babel-node ./src/tests/redux.js",
@@ -28,10 +28,11 @@
 		"scripts": "nodemon --exec babel-node ./src/tests/scripts.js"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.6.2",
-		"@babel/core": "^7.6.2",
-		"@babel/node": "^7.6.2",
-		"@babel/preset-env": "^7.6.2",
+		"@babel/cli": "^7.6.4",
+		"@babel/core": "^7.6.4",
+		"@babel/node": "^7.6.3",
+		"@babel/polyfill": "^7.6.0",
+		"@babel/preset-env": "^7.6.3",
 		"babel-eslint": "^10.0.3",
 		"eslint": "^6.0.1",
 		"eslint-config-prettier": "^6.3.0",
@@ -58,7 +59,6 @@
 		"express": "^4.17.1",
 		"express-basic-auth": "^1.2.0",
 		"got": "^9.6.0",
-		"graphql": "^14.4.2",
 		"https-proxy-agent": "^2.2.2",
 		"luxon": "^1.16.0",
 		"md5": "^2.2.1",
@@ -70,7 +70,6 @@
 		"shelljs": "^0.8.3",
 		"socks-proxy-agent": "^4.0.2",
 		"targz": "^1.0.1",
-		"tinyqueue": "^2.0.3",
 		"winston": "^3.2.1"
 	}
 }

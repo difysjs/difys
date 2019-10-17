@@ -1,32 +1,31 @@
 import store from "../../Store";
 
-function kpiStartCallBack(socket) {
-	socket.eventEmitter.once(
-		"BasicNoOperationMessage",
-		() => {
-			const username = socket.account.username;
-			const account = store.getState().accounts[username];
-
-			socket.sendMessage("ObjectAveragePricesGetMessage");
-			socket.sendMessage("MapInformationsRequestMessage", {
-				mapId: account.mapId
-			});
-		},
-		this
-	);
+function kpiStartCallBack(socket, account) {
+	socket.sendMessage("ObjectAveragePricesGetMessage");
+	socket.sendMessage("MapInformationsRequestMessage", {
+		mapId: account.mapId
+	});
 }
 
 export default function kpiStartSessionMessage(payload) {
 	const { socket } = payload;
 	const account = store.getState().accounts[socket.account.username];
 
-	if (account.gameContextCreated) {
-		kpiStartCallBack(socket);
-	} else {
-		socket.eventEmitter.once(
-			"GameContextCreateMessage",
-			() => kpiStartCallBack(socket),
-			this
-		);
+	switch (account.gameContextCreated) {
+		case 0:
+			socket.eventEmitter.once("GameContextCreateMessage", () => {
+				socket.eventEmitter.once("BasicNoOperationMessage", () =>
+					kpiStartCallBack(socket, account)
+				);
+			});
+			break;
+		case 1:
+			socket.eventEmitter.once("BasicNoOperationMessage", () =>
+				kpiStartCallBack(socket, account)
+			);
+			break;
+		case 2:
+			kpiStartCallBack(socket, account);
+			break;
 	}
 }

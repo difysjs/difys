@@ -14,10 +14,12 @@
 		"enabled": true,
 		"interval": 1
 	},
+	"difysUI": {
+		"port": 2323
+	},
 	"api": {
-		"store": {
+		"data": {
 			"enabled": true,
-			"websocket": false,
 			"port": 1337,
 			"password": "admin"
 		},

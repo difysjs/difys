@@ -6,12 +6,8 @@ import { general } from "../../Config";
 import { logger } from "../../Libs";
 
 export default function() {
-	const config = general.api.store;
+	const config = general.api.data;
 
-	if (config.websocket) {
-		logger.warn("StoreAPI | Websocket is not implemented yet");
-		return;
-	}
 	if (!config.enabled) {
 		return;
 	}
@@ -19,7 +15,7 @@ export default function() {
 
 	app.use(basicAuth({ users: { admin: config.password } }));
 	app.use(express.json());
-	app.put("/", (req, res) => {
+	app.put("/store", (req, res) => {
 		if (typeof req.body.slice === "undefined") {
 			res.write("Property 'slice' not found");
 			return res.sendStatus(400).end();
@@ -36,7 +32,7 @@ export default function() {
 		store.dispatch(action(req.body.data));
 		res.sendStatus(200).end();
 	});
-	app.post("/", (req, res) => {
+	app.post("/store", (req, res) => {
 		if (typeof req.body.slice === "undefined") {
 			res.write("Property 'slice' not found");
 			return res.sendStatus(400).end();
@@ -53,7 +49,7 @@ export default function() {
 	return new Promise(resolve => {
 		app.listen(config.port, () => {
 			logger.info(
-				"StoreAPI | Server listening on localhost:" + config.port
+				"DataAPI | Service listening on localhost:" + config.port
 			);
 			resolve();
 		});

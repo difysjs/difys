@@ -6,7 +6,7 @@ import yarn from "./yarn";
 import logger from "./Logger";
 
 const pluginPackageFileName = "plugin.json";
-const pluginRootPath = "./src/Plugins/";
+const pluginRootPath = path.join(__dirname, "../Plugins/");
 const pluginPaths = getDirectoryList(pluginRootPath);
 
 function getDirectoryList(dirPath) {

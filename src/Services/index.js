@@ -3,7 +3,7 @@ import mongoServer from "./mongoServer";
 import mongoDB from "./mongoDB";
 import { getPluginsBinaries, logger } from "../Libs";
 import { general } from "../Config";
-import storeAPI from "./storeAPI";
+import dataAPI from "./dataAPI";
 import LiveScript from "./liveScript";
 
 export default async function() {
@@ -16,8 +16,8 @@ export default async function() {
 		await mongoDB.loadSchemas();
 		await binariesService(enabledBinaries);
 	}
-	if (general.api.store.enabled) {
-		await storeAPI();
+	if (general.api.data.enabled) {
+		await dataAPI();
 	}
 	if (general.api.livescript.enabled) {
 		LiveScript();

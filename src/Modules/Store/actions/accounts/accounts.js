@@ -7,7 +7,7 @@ const addAccount = (state, action) => {
 		plugins: {},
 		currentSequenceNumber: 0,
 		useDefaultCharactersListMessage: true,
-		gameContextCreated: false
+		gameContextCreated: 0
 	};
 };
 
@@ -66,8 +66,8 @@ const addPlugin = (state, action) => {
 };
 
 const gameContextCreate = (state, action) => {
-	const username = action.payload.username;
-	state[username].gameContextCreated = true;
+	const { username, context } = action.payload;
+	state[username].gameContextCreated = context; // 0: not created, 1: created, 2: event cycle done
 };
 
 export {

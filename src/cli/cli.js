@@ -37,7 +37,7 @@ function getHelp() {
 function getCommandList() {
 	let list = [];
 
-	for (let command in commands) {
+	for (const command in commands) {
 		list.push(command);
 		list = list.concat(commands[command].alias);
 	}
@@ -45,7 +45,7 @@ function getCommandList() {
 }
 
 function getCommandName(name) {
-	for (let command in commands) {
+	for (const command in commands) {
 		if (command === name || commands[command].alias.includes(name)) {
 			return command;
 		}

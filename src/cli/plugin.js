@@ -27,6 +27,7 @@ request.defaults({
 
 const urlRegex = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
 const filenameFromHeaderRegex = /(filename=|filename\*='')(.*)$/;
+const githubSearchRegex = /(?:difys-)(.*)(?:-plugin)/gi;
 
 function downloadPlugin(filename, url) {
 	return new Promise((resolve, reject) => {
@@ -41,7 +42,7 @@ function downloadPlugin(filename, url) {
 				const errorMessage = "Request error " + response.statusCode;
 				return reject(errorMessage);
 			}
-			let fileSize = Math.floor(
+			const fileSize = Math.floor(
 				response.headers["content-length"] / 1000
 			); // KB
 			const contentDisposition = response.headers["content-disposition"];
@@ -86,31 +87,42 @@ function getPluginFromGithubUserRepository(url) {
 			if (error) {
 				return reject(error);
 			}
-			resolve(body.match(/(?:difys-)(.*)(?:-plugin)/gi));
+			resolve(body.match(githubSearchRegex));
 		});
 	});
 }
 
 function getPluginListFromGithubUserRepository() {
-	return new Promise(async resolve => {
-		let pluginList = {};
+	return new Promise(resolve => {
+		const pluginList = {};
+		const basePluginsUsers = Object.keys(basePlugins);
+		let repository = getPluginFromGithubUserRepository(
+			basePlugins[basePluginsUsers[0]]
+		);
+		for (let i = 1; i < basePluginsUsers.length + 1; i++) {
+			const username = basePluginsUsers[i];
 
-		for (const username in basePlugins) {
-			const url = basePlugins[username];
-			const nameList = await getPluginFromGithubUserRepository(url);
-			const list = new Set();
-
-			for (const pluginName of nameList) {
-				list.add(/(?:difys-)(.*)(?:-plugin)/gi.exec(pluginName)[1]);
-			}
-			pluginList[username] = [...list];
+			repository = repository.then(nameList => {
+				if (username) {
+					const url = basePlugins[username];
+					pluginList[username] = [
+						...new Set(
+							nameList.map(
+								pluginName =>
+									githubSearchRegex.exec(pluginName)[1]
+							)
+						)
+					];
+					return getPluginFromGithubUserRepository(url);
+				}
+			});
 		}
-		resolve(pluginList);
+		repository.then(() => resolve(pluginList));
 	});
 }
 
 async function add(args) {
-	let pluginName = args[0];
+	const pluginName = args[0];
 	let pluginUrl = pluginName;
 	const isUrl = urlRegex.test(pluginName);
 

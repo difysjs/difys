@@ -23,7 +23,7 @@ function getRandomNumbers(min, max) {
 	return string;
 }
 
-export default function() {
+export default function generateNickname() {
 	var string = "";
 	const containMiddleNumbers = Math.floor(Math.random() * 20) > 15;
 	const containNumbers = Math.floor(Math.random() * 20) > 8;

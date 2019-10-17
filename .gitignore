@@ -10,7 +10,11 @@ src/Config/accounts.json
 src/Plugins/*
 !src/Plugins/ChatMath
 !src/Plugins/readme.md
+src/Scripts/*
+!src/Script/test.js
 *.bat
+# Coming in the next update :3
+src/ui*
 
 # Runtime data
 pids

@@ -19,7 +19,7 @@ export default class ScriptLoader {
 			) {
 				const unSubscribe = store.subscribe(() => {
 					if (store.getState().accounts[username].status == "IDLE") {
-						this.runScript(username, scriptName);
+						this.initScript(username, scriptName);
 						unSubscribe();
 					}
 				});
@@ -27,7 +27,7 @@ export default class ScriptLoader {
 		}
 	}
 
-	async runScript(username, scriptName) {
+	async initScript(username, scriptName) {
 		let textCode;
 		try {
 			textCode = await this.getScriptFile(scriptName);
@@ -60,9 +60,9 @@ export default class ScriptLoader {
 
 		while (true) {
 			const next = generator.next(nextValue);
-			nextValue = undefined;
+			nextValue = await next.value;
 
-			if (this.isGeneratorFunction(next.value)) {
+			if (this.isGeneratorFunction(nextValue)) {
 				const generator2 = next.value;
 
 				while (true) {
@@ -74,7 +74,7 @@ export default class ScriptLoader {
 					}
 				}
 			}
-			if (next.done === true) {
+			if (next.done === true || nextValue === false) {
 				logger.info(`Script ${scriptName} ended`);
 				connection.eventEmitter.off(
 					"serverDisconnecting",
@@ -93,9 +93,12 @@ export default class ScriptLoader {
 	isGeneratorFunction(fn) {
 		try {
 			const name = fn.toString();
+			const constructorName = fn.constructor.name;
 			if (
 				name == "[object Generator]" ||
-				name == "[object AsyncGenerator]"
+				name == "[object AsyncGenerator]" ||
+				constructorName == "_Generator" ||
+				constructorName == "_AsyncGenerator"
 			) {
 				return true;
 			}
