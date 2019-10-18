@@ -13,26 +13,28 @@ export default function CharacterSelectedSuccessMessage(payload) {
 		accountSessionId: account.extra.accountSessionId,
 		isSubscriber
 	});
-	socket.send("moneyGoultinesAmountRequest");
-	socket.sendMessage("QuestListRequestMessage");
-	socket.sendMessage("FriendsGetListMessage");
-	socket.sendMessage("IgnoredGetListMessage");
-	socket.sendMessage("SpouseGetInformationsMessage");
-	socket.sendMessage("OfflineOptionsUpdateRequestMessage", {
-		options: "1,0,NON+PAN+PVN"
-	});
-	socket.send("bakSoftToHardCurrentRateRequest");
-	socket.send("bakHardToSoftCurrentRateRequest");
-	socket.send("restoreMysteryBox");
-	socket.sendMessage("ClientKeyMessage", {
-		key: generateString(20)
-	});
-	socket.sendMessage("GameContextCreateRequestMessage");
+	setTimeout(() => {
+		socket.send("moneyGoultinesAmountRequest");
+		socket.sendMessage("QuestListRequestMessage");
+		socket.sendMessage("FriendsGetListMessage");
+		socket.sendMessage("IgnoredGetListMessage");
+		socket.sendMessage("SpouseGetInformationsMessage");
+		socket.sendMessage("OfflineOptionsUpdateRequestMessage", {
+			options: "1,0,NON+PAN+PVN"
+		});
+		socket.send("bakSoftToHardCurrentRateRequest");
+		socket.send("bakHardToSoftCurrentRateRequest");
+		socket.send("restoreMysteryBox");
+		socket.sendMessage("ClientKeyMessage", {
+			key: generateString(20)
+		});
+		socket.sendMessage("GameContextCreateRequestMessage");
 
-	if (general.antiAfk) {
-		setInterval(
-			() => socket.sendMessage("BasicPingMessage", { quiet: true }),
-			antiAFKInterval
-		);
-	}
+		if (general.antiAfk) {
+			setInterval(
+				() => socket.sendMessage("BasicPingMessage", { quiet: true }),
+				antiAFKInterval
+			);
+		}
+	}, 0);
 }

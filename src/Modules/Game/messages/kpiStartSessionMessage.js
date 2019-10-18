@@ -1,6 +1,8 @@
 import store from "../../Store";
 
-function kpiStartCallBack(socket, account) {
+function kpiStartCallBack(socket) {
+	const account = store.getState().accounts[socket.account.username];
+
 	socket.sendMessage("ObjectAveragePricesGetMessage");
 	socket.sendMessage("MapInformationsRequestMessage", {
 		mapId: account.mapId
@@ -14,18 +16,19 @@ export default function kpiStartSessionMessage(payload) {
 	switch (account.gameContextCreated) {
 		case 0:
 			socket.eventEmitter.once("GameContextCreateMessage", () => {
-				socket.eventEmitter.once("BasicNoOperationMessage", () =>
-					kpiStartCallBack(socket, account)
+				socket.eventEmitter.once(
+					"bakHardToSoftCurrentRateSuccess",
+					() => kpiStartCallBack(socket)
 				);
 			});
 			break;
 		case 1:
-			socket.eventEmitter.once("BasicNoOperationMessage", () =>
-				kpiStartCallBack(socket, account)
+			socket.eventEmitter.once("bakHardToSoftCurrentRateSuccess", () =>
+				kpiStartCallBack(socket)
 			);
 			break;
 		case 2:
-			kpiStartCallBack(socket, account);
+			kpiStartCallBack(socket);
 			break;
 	}
 }

@@ -1,8 +1,8 @@
 import livescript from "../Services/liveScript";
-import storeAPI from "../Services/storeAPI";
+import dataAPI from "../Services/dataAPI";
 import store from "../Modules/Store";
 
 (async function() {
-	storeAPI();
+	dataAPI();
 	livescript();
 })();

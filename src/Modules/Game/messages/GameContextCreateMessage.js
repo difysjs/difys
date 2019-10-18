@@ -9,7 +9,7 @@ export default function GameContextCreateMessage(payload) {
 
 	store.dispatch(gameContextCreate({ username, context: 1 }));
 
-	socket.eventEmitter.once("BasicNoOperationMessage", () =>
+	socket.eventEmitter.once("bakHardToSoftCurrentRateSuccess", () =>
 		store.dispatch(gameContextCreate({ username, context: 2 }))
 	);
 }
