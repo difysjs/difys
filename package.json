@@ -17,7 +17,7 @@
 		"node": ">=12"
 	},
 	"scripts": {
-		"start": "babel-node --experimental-worker ./src/index.js",
+		"start": "babel-node ./src/index.js",
 		"dev": "nodemon --exec babel-node ./src/index.js",
 		"debug": "nodemon --exec babel-node --inspect-brk ./src/index.js",
 		"redux": "nodemon --exec babel-node ./src/tests/redux.js",
