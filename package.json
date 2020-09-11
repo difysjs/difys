@@ -41,7 +41,7 @@
     "engine.io-client": "^3.3.2",
     "express": "^4.17.1",
     "fs-extra": "^8.1.0",
-    "https-proxy-agent": "^2.2.2",
+    "https-proxy-agent": "^2.2.3",
     "luxon": "^1.16.0",
     "primus": "^7.3.3",
     "redux": "^4.0.4",
